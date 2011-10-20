@@ -23,18 +23,23 @@ public final class DemoPresentation extends Presentation {
 
         define("root", "root");
         define("nav", "bar");
+        define("estate-info", "bar");
         define("main", "main");
     }
 
-    public void initControl(UIElement content, Component component) {
+    public void bar(UIElement content, Component component) {
+        component.addStyleName("bar");
+    }
+
+    public void control(UIElement content, Component component) {
         component.setCaption(content.getName());
     }
 
-    public void root(UIElement content, Component component) {
+    public void main(UIElement content, Component component) {
         component.setHeight(100, Sizeable.UNITS_PERCENTAGE);
     }
 
-    public void initMain(UIElement content, Component component) {
+    public void root(UIElement content, Component component) {
         component.setHeight(100, Sizeable.UNITS_PERCENTAGE);
     }
 }

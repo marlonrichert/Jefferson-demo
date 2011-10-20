@@ -10,7 +10,7 @@ public class DemoContent extends View {
     private final Control title = new LabelControl("title");
     private final Control tabs = new SelectionControl("tabs");
     private final Control newEstate = new ButtonControl("new-item");
-    private final Control user = new ButtonControl("user");
+    private final Control profile = new ButtonControl("profile");
     private final Control signOut = new ButtonControl("sign-out");
     private final Control estates = new SelectionControl("estates");
 
@@ -27,17 +27,25 @@ public class DemoContent extends View {
     private final View details = new View("details");
     private final View nav = new View("nav");
     private final View main = new View("main");
+    private final View userActions = new View("user-actions");
+    private final View expenseManagement = new View("expense-management");
+    private final View estateInfo = new View("estate-info");
 
     public DemoContent() {
         super("root");
 
         setChildren(nav, main);
 
-        nav.setChildren(title, tabs, newEstate, user, signOut);
+        nav.setChildren(title, tabs, newEstate, userActions);
+        userActions.setChildren(profile, signOut);
 
         main.setChildren(estates, details);
-        details.setChildren(name, open, properties, expenses, addExpense);
+        details.setChildren(estateInfo, expenseManagement);
+
+        estateInfo.setChildren(name, open, properties);
         properties.setChildren(max, date, state);
+
+        expenseManagement.setChildren(expenses, addExpense);
     }
 
     public View getPropertiesView() {

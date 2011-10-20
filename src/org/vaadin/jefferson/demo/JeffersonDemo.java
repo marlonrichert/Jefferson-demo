@@ -42,7 +42,7 @@ public class JeffersonDemo extends Application {
 
     @Override
     public void init() {
-        setTheme("chameleon");
+        setTheme("jefferson-demo");
         Window mainWindow = new Window("Jefferson Demo");
         setMainWindow(mainWindow);
 
