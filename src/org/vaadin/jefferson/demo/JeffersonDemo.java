@@ -37,7 +37,7 @@ public class JeffersonDemo extends Application {
 
         propertyValues.put("max", "241 959,01 €");
         propertyValues.put("date", "1.1.2010");
-        propertyValues.put("state", "State");
+        propertyValues.put("state", "Canceled");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class JeffersonDemo extends Application {
         }
 
         for (UIElement property : content.getPropertiesView().getChildren()) {
-            Component component = property.getComponent();
+            Component component = property.getRendition();
             String name = property.getName();
             component.setCaption(propertyCaptions.get(name));
             ((Property) component).setValue(propertyValues.get(name));

@@ -24,18 +24,14 @@ html,.v-generated-body {
   position: relative;
 }
 
-.v-csslayout-root>div,.v-csslayout-root>div>div {
+.v-csslayout>div,.v-csslayout>div>div {
+  width: 100%;
   height: 100%;
 }
 
 .bar {
   width: 100%;
-  height: 2em;
-}
-
-.v-csslayout-bar>div,.v-csslayout-bar>div>div {
-  width: 100%;
-  height: 100%;
+  height: 3em;
 }
 
 .v-csslayout-bar>div>div>* {
@@ -44,11 +40,26 @@ html,.v-generated-body {
 
 .bar+* {
   position: absolute;
-  top: 2em;
+  height: auto !important;
+  top: 3em;
   bottom: 0;
   width: 100%;
 }
 
 .v-csslayout-properties>div>div>* {
   display: inline-block;
+}
+
+.user-actions {
+  position: absolute;
+  right: 0;
+}
+
+.details {
+  height: 100%;
+}
+
+.add-expense {
+  position: absolute;
+  bottom: 0;
 }
