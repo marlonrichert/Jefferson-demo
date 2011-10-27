@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class TabSegment extends HorizontalLayout {
 
@@ -23,7 +23,6 @@ public class TabSegment extends HorizontalLayout {
         buttons.add(b);
         addComponent(b);
         b.addListener(new Button.ClickListener() {
-            @Override
             public void buttonClick(ClickEvent event) {
                 for (Button button : buttons) {
                     button.removeStyleName("down");
