@@ -6,6 +6,14 @@ import org.vaadin.jefferson.content.SelectionControl;
 import org.vaadin.jefferson.content.View;
 
 public class EstatesContent extends View {
+    private static final String ROOT = "root";
+    private static final String NAV = "nav";
+    private static final String MAIN = "main";
+    private static final String DETAILS = "details";
+    private static final String ESTATE_INFO = "estate-info";
+    private static final String PROPERTIES = "properties";
+    private static final String EXPENSE_MANAGEMENT = "expense-management";
+
     private final LabelControl title = new LabelControl("title");
     private final SelectionControl tabs = new SelectionControl("tabs");
     private final ButtonControl newEstate = new ButtonControl("new-item");
@@ -22,33 +30,26 @@ public class EstatesContent extends View {
     private final LabelControl date = new LabelControl("date");
     private final LabelControl state = new LabelControl("state");
 
-    private final View properties = new View("properties");
-    private final View details = new View("details");
-    private final View nav = new View("nav");
-    private final View main = new View("main");
-    private final View userActions = new View("user-actions");
-    private final View expenseManagement = new View("expense-management");
-    private final View estateInfo = new View("estate-info");
-
     public EstatesContent() {
-        super("root");
+        super(ROOT);
 
-        setChildren(nav, main);
-
-        nav.setChildren(title, tabs, newEstate, userActions);
-        userActions.setChildren(profile, signOut);
-
-        main.setChildren(estates, details);
-        details.setChildren(estateInfo, expenseManagement);
-
-        estateInfo.setChildren(name, open, properties);
-        properties.setChildren(max, date, state);
-
-        expenseManagement.setChildren(expenses, addExpense);
+        setChildren(
+                view(NAV,
+                        title, tabs, newEstate,
+                        view("user-actions", profile, signOut)),
+                view(MAIN,
+                        estates,
+                        view(DETAILS,
+                                view(ESTATE_INFO,
+                                        name, open,
+                                        view(PROPERTIES,
+                                                max, date, state)),
+                                view(EXPENSE_MANAGEMENT,
+                                        expenses, addExpense))));
     }
 
     public View getPropertiesView() {
-        return properties;
+        return getView(PROPERTIES);
     }
 
     public SelectionControl getEstatesControl() {
