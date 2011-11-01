@@ -59,16 +59,15 @@ public class EstatesDemo extends Application {
             throw new ExceptionInInitializerError(e);
         }
 
-        for (UIElement property : content.getPropertiesView().getChildren()) {
+        for (UIElement<?> property : content.getPropertiesView().getChildren()) {
             Component component = property.getRendition();
             String name = property.getName();
             component.setCaption(propertyCaptions.get(name));
             ((Property) component).setValue(propertyValues.get(name));
         }
 
-        AbstractSelect estates = (AbstractSelect) content.getEstatesControl()
-                .getRendition();
-        estates.setContainerDataSource(new IndexedContainer(Arrays.asList("A",
-                "B", "C")));
+        AbstractSelect estates = content.getEstatesControl().getRendition();
+        estates.setContainerDataSource(
+                new IndexedContainer(Arrays.asList("A", "B", "C")));
     }
 }

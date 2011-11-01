@@ -27,19 +27,19 @@ public final class EstatesPresentation extends Presentation {
         define("expenses", "fill");
     }
 
-    public void bar(UIElement content, Component component) {
+    public void bar(UIElement<?> content, Component component) {
         component.addStyleName("bar");
     }
 
-    public void fill(UIElement content, Component component) {
+    public void fill(UIElement<?> content, Component component) {
         component.setSizeFull();
     }
 
-    public void main(UIElement content, Component component) {
+    public void main(UIElement<?> content, Component component) {
         component.setHeight(100, Sizeable.UNITS_PERCENTAGE);
     }
 
-    public void root(UIElement content, Component component) {
+    public void root(UIElement<?> content, Component component) {
         component.setHeight(100, Sizeable.UNITS_PERCENTAGE);
     }
 }
