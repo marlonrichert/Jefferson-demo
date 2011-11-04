@@ -10,36 +10,36 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
 
-public final class EstatesPresentation extends Presentation {
+public class EstatesPresentation extends Presentation {
     public EstatesPresentation() {
         define(SelectionControl.class, Table.class);
 
         define("main", VerticalSplitPanel.class);
-        define("main", "main");
+        define("main", method("main"));
 
         define("properties", HorizontalLayout.class);
 
         define("tabs", TabSegment.class);
-        define("root", "root");
-        define("nav", "bar");
-        define("estate-info", "bar");
-        define("estates", "fill");
-        define("expenses", "fill");
+        define("root", method("root"));
+        define("nav", method("bar"));
+        define("estate-info", method("bar"));
+        define("estates", method("fill"));
+        define("expenses", method("fill"));
     }
 
-    public void bar(UIElement<?> content, Component component) {
+    void bar(UIElement<?> content, Component component) {
         component.addStyleName("bar");
     }
 
-    public void fill(UIElement<?> content, Component component) {
+    void fill(UIElement<?> content, Component component) {
         component.setSizeFull();
     }
 
-    public void main(UIElement<?> content, Component component) {
+    void main(UIElement<?> content, Component component) {
         component.setHeight(100, Sizeable.UNITS_PERCENTAGE);
     }
 
-    public void root(UIElement<?> content, Component component) {
+    void root(UIElement<?> content, Component component) {
         component.setHeight(100, Sizeable.UNITS_PERCENTAGE);
     }
 }
