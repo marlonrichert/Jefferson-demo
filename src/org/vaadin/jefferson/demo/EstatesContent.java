@@ -6,13 +6,7 @@ import org.vaadin.jefferson.content.SelectionControl;
 import org.vaadin.jefferson.content.View;
 
 public class EstatesContent extends View {
-    private static final String ROOT = "root";
-    private static final String NAV = "nav";
-    private static final String MAIN = "main";
-    private static final String DETAILS = "details";
-    private static final String ESTATE_INFO = "estate-info";
     private static final String PROPERTIES = "properties";
-    private static final String EXPENSE_MANAGEMENT = "expense-management";
 
     private final LabelControl title = new LabelControl("title");
     private final SelectionControl tabs = new SelectionControl("tabs");
@@ -31,20 +25,20 @@ public class EstatesContent extends View {
     private final LabelControl state = new LabelControl("state");
 
     public EstatesContent() {
-        super(ROOT);
+        super("root");
 
         setChildren(
-                view(NAV,
+                view("nav",
                         title, tabs, newEstate,
                         view("user-actions", profile, signOut)),
-                view(MAIN,
+                view("main",
                         estates,
-                        view(DETAILS,
-                                view(ESTATE_INFO,
+                        view("details",
+                                view("estate-info",
                                         name, open,
                                         view(PROPERTIES,
                                                 max, date, state)),
-                                view(EXPENSE_MANAGEMENT,
+                                view("expense-management",
                                         expenses, addExpense))));
     }
 

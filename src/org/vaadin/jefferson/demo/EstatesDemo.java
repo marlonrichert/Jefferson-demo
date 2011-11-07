@@ -26,7 +26,6 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
 public class EstatesDemo extends Application {
@@ -53,8 +52,7 @@ public class EstatesDemo extends Application {
         EstatesPresentation presentation = new EstatesPresentation();
 
         try {
-            mainWindow.setContent((ComponentContainer) presentation
-                    .render(content));
+            mainWindow.setContent(presentation.render(content));
         } catch (Exception e) {
             throw new ExceptionInInitializerError(e);
         }
