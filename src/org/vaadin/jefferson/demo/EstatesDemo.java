@@ -19,13 +19,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.jefferson.content.UIElement;
+import org.vaadin.jefferson.content.LabelControl;
+import org.vaadin.jefferson.demo.EstatesContent.PropertiesView;
 
 import com.vaadin.Application;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.AbstractSelect;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
 
 public class EstatesDemo extends Application {
@@ -33,13 +33,16 @@ public class EstatesDemo extends Application {
     private final Map<String, String> propertyValues = new HashMap<String, String>();
 
     public EstatesDemo() {
-        propertyCaptions.put("max", "Greater value of assets and debit");
-        propertyCaptions.put("date", "Filed for bankruptcy");
-        propertyCaptions.put("state", "State");
+        propertyCaptions.put(
+                PropertiesView.MAX, "Greater value of assets and debit");
+        propertyCaptions.put(
+                PropertiesView.DATE, "Filed for bankruptcy");
+        propertyCaptions.put(
+                PropertiesView.STATE, "State");
 
-        propertyValues.put("max", "241 959,01 €");
-        propertyValues.put("date", "1.1.2010");
-        propertyValues.put("state", "Canceled");
+        propertyValues.put(PropertiesView.MAX, "241 959,01 €");
+        propertyValues.put(PropertiesView.DATE, "1.1.2010");
+        propertyValues.put(PropertiesView.STATE, "Canceled");
     }
 
     @Override
@@ -57,11 +60,12 @@ public class EstatesDemo extends Application {
             throw new ExceptionInInitializerError(e);
         }
 
-        for (UIElement<?> property : content.getPropertiesView().getChildren()) {
-            Component component = property.getRendition();
+        for (LabelControl property : content.getPropertiesView()
+                .getProperties()) {
+            Label rendition = property.getRendition();
             String name = property.getName();
-            component.setCaption(propertyCaptions.get(name));
-            ((Property) component).setValue(propertyValues.get(name));
+            rendition.setCaption(propertyCaptions.get(name));
+            rendition.setValue(propertyValues.get(name));
         }
 
         AbstractSelect estates = content.getEstatesControl().getRendition();

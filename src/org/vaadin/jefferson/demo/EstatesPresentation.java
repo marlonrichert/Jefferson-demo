@@ -14,18 +14,18 @@ import com.vaadin.ui.VerticalSplitPanel;
 public class EstatesPresentation extends Presentation {
     public EstatesPresentation() {
         define(SelectionControl.class, Table.class);
-        define("tabs", NativeSelect.class);
+        define("Tabs", NativeSelect.class);
 
-        define("main", VerticalSplitPanel.class);
-        define("main", method("main"));
+        define("Main", VerticalSplitPanel.class);
+        define("Main", method("main"));
 
-        define("properties", HorizontalLayout.class);
+        define("Properties", HorizontalLayout.class);
 
-        define("root", method("root"));
-        define("nav", method("bar"));
-        define("estate-info", method("bar"));
-        define("estates", method("fill"));
-        define("expenses", method("fill"));
+        define("Root", method("root"));
+        define("Navigation", method("bar"));
+        define("Estate info", method("bar"));
+        define("Estates", method("fill"));
+        define("Expense", method("fill"));
     }
 
     void bar(UIElement<?> content, Component component) {

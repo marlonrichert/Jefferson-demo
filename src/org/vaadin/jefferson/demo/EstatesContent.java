@@ -6,47 +6,63 @@ import org.vaadin.jefferson.content.SelectionControl;
 import org.vaadin.jefferson.content.View;
 
 public class EstatesContent extends View {
-    private static final String PROPERTIES = "properties";
+    private final LabelControl title = new LabelControl("Title");
+    private final SelectionControl tabs = new SelectionControl("Tabs");
+    private final ButtonControl newEstate = new ButtonControl("New item");
+    private final ButtonControl profile = new ButtonControl("Profile");
+    private final ButtonControl signOut = new ButtonControl("Sign out");
+    private final SelectionControl estates = new SelectionControl("Estates");
 
-    private final LabelControl title = new LabelControl("title");
-    private final SelectionControl tabs = new SelectionControl("tabs");
-    private final ButtonControl newEstate = new ButtonControl("new-item");
-    private final ButtonControl profile = new ButtonControl("profile");
-    private final ButtonControl signOut = new ButtonControl("sign-out");
-    private final SelectionControl estates = new SelectionControl("estates");
+    private final LabelControl name = new LabelControl("Name");
+    private final ButtonControl open = new ButtonControl("Open");
+    private final SelectionControl expenses = new SelectionControl("Expenses");
+    private final ButtonControl addExpense = new ButtonControl("Add expense");
 
-    private final LabelControl name = new LabelControl("name");
-    private final ButtonControl open = new ButtonControl("open");
-    private final SelectionControl expenses = new SelectionControl("expenses");
-    private final ButtonControl addExpense = new ButtonControl("add-expense");
-
-    private final LabelControl max = new LabelControl("max");
-    private final LabelControl date = new LabelControl("date");
-    private final LabelControl state = new LabelControl("state");
+    private final PropertiesView propertiesView = new PropertiesView();
 
     public EstatesContent() {
-        super("root");
+        super("Root");
 
         setChildren(
-                view("nav",
+                new View("Navigation",
                         title, tabs, newEstate,
-                        view("user-actions", profile, signOut)),
-                view("main",
+                        new View("user-actions",
+                                profile, signOut)),
+                new View("Main",
                         estates,
-                        view("details",
-                                view("estate-info",
+                        new View("Details",
+                                new View("Estate info",
                                         name, open,
-                                        view(PROPERTIES,
-                                                max, date, state)),
-                                view("expense-management",
+                                        propertiesView),
+                                new View("Expense management",
                                         expenses, addExpense))));
     }
 
-    public View getPropertiesView() {
-        return getView(PROPERTIES);
+    public PropertiesView getPropertiesView() {
+        return propertiesView;
     }
 
     public SelectionControl getEstatesControl() {
         return estates;
+    }
+
+    public static class PropertiesView extends View {
+        public static final String STATE = "State";
+        public static final String DATE = "Date";
+        public static final String MAX = "Max";
+
+        private final LabelControl max = new LabelControl(MAX);
+        private final LabelControl date = new LabelControl(DATE);
+        private final LabelControl state = new LabelControl(STATE);
+
+        public PropertiesView() {
+            super("Properties");
+
+            setChildren(max, date, state);
+        }
+
+        public LabelControl[] getProperties() {
+            return new LabelControl[] { max, date, state };
+        }
     }
 }
