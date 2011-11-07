@@ -1,7 +1,6 @@
 package org.vaadin.jefferson.demo;
 
 import com.vaadin.Application;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
 public class CustomersDemo extends Application {
@@ -16,8 +15,7 @@ public class CustomersDemo extends Application {
         CustomersPresentation presentation = new CustomersPresentation();
 
         try {
-            mainWindow.setContent((ComponentContainer) presentation
-                    .render(content));
+            mainWindow.setContent(presentation.render(content));
         } catch (Exception e) {
             throw new ExceptionInInitializerError(e);
         }
