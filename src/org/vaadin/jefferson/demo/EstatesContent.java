@@ -9,6 +9,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.Table;
 
@@ -16,32 +17,32 @@ public class EstatesContent extends Composite<ComponentContainer> {
     private final View<Label> title = View.create(
             "Title", Label.class, Label.class);
 
-    private final View<AbstractSelect> tabs = View.create(
-            "Tabs", AbstractSelect.class, Select.class);
-
-    private final View<Button> newEstate = View.create(
-            "New item", Button.class, Button.class);
-
-    private final View<Button> profile = View.create(
-            "Profile", Button.class, Button.class);
-
-    private final View<Button> signOut = View.create(
-            "Sign out", Button.class, Button.class);
-
-    private final View<AbstractSelect> estates = View.create(
-            "Estates", AbstractSelect.class, Table.class);
-
     private final View<Label> name = View.create(
             "Name", Label.class, Label.class);
 
-    private final View<Button> open = View.create(
-            "Open", Button.class, Button.class);
+    private final View<AbstractSelect> tabs = View.create(
+            "Tabs", AbstractSelect.class, Select.class);
 
     private final View<AbstractSelect> expenses = View.create(
             "Expenses", AbstractSelect.class, Table.class);
 
+    private final View<Button> newEstate = View.create(
+            "New item", Button.class, NativeButton.class);
+
+    private final View<Button> profile = View.create(
+            "Profile", Button.class, NativeButton.class);
+
+    private final View<Button> signOut = View.create(
+            "Sign out", Button.class, NativeButton.class);
+
+    private final View<AbstractSelect> estates = View.create(
+            "Estates", AbstractSelect.class, Table.class);
+
+    private final View<Button> open = View.create(
+            "Open", Button.class, NativeButton.class);
+
     private final View<Button> addExpense = View.create(
-            "Add expense", Button.class, Button.class);
+            "Add expense", Button.class, NativeButton.class);
 
     private final Composite<ComponentContainer> navigation = Composite.create(
             "Navigation", ComponentContainer.class, CssLayout.class);
@@ -58,12 +59,11 @@ public class EstatesContent extends Composite<ComponentContainer> {
     private final Composite<ComponentContainer> estateInfo = Composite.create(
             "Estate info", ComponentContainer.class, CssLayout.class);
 
-    private final PropertiesView properties = new PropertiesView();
-
     private final Composite<ComponentContainer> expenseManagement = Composite
-            .create(
-                    "Expense management", ComponentContainer.class,
+            .create("Expense management", ComponentContainer.class,
                     CssLayout.class);
+
+    private final PropertiesView properties = new PropertiesView();
 
     public EstatesContent() {
         super("Root", ComponentContainer.class, CssLayout.class);
