@@ -15,7 +15,7 @@ public class CustomersDemo extends Application {
         CustomersPresentation presentation = new CustomersPresentation();
 
         try {
-            mainWindow.setContent(presentation.render(content));
+            mainWindow.setContent(presentation.visit(content));
         } catch (Exception e) {
             throw new ExceptionInInitializerError(e);
         }

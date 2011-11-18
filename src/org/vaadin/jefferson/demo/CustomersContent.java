@@ -1,10 +1,13 @@
 package org.vaadin.jefferson.demo;
 
-import org.vaadin.jefferson.content.View;
+import org.vaadin.jefferson.content.Composite;
 
-public class CustomersContent extends View {
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+
+public class CustomersContent extends Composite<ComponentContainer> {
 
     public CustomersContent() {
-        super("root");
+        super("root", ComponentContainer.class, CssLayout.class);
     }
 }

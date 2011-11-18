@@ -1,68 +1,119 @@
 package org.vaadin.jefferson.demo;
 
-import org.vaadin.jefferson.content.ButtonControl;
-import org.vaadin.jefferson.content.LabelControl;
-import org.vaadin.jefferson.content.SelectionControl;
+import org.vaadin.jefferson.content.Composite;
 import org.vaadin.jefferson.content.View;
 
-public class EstatesContent extends View {
-    private final LabelControl title = new LabelControl("Title");
-    private final SelectionControl tabs = new SelectionControl("Tabs");
-    private final ButtonControl newEstate = new ButtonControl("New item");
-    private final ButtonControl profile = new ButtonControl("Profile");
-    private final ButtonControl signOut = new ButtonControl("Sign out");
-    private final SelectionControl estates = new SelectionControl("Estates");
+import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Select;
+import com.vaadin.ui.Table;
 
-    private final LabelControl name = new LabelControl("Name");
-    private final ButtonControl open = new ButtonControl("Open");
-    private final SelectionControl expenses = new SelectionControl("Expenses");
-    private final ButtonControl addExpense = new ButtonControl("Add expense");
+public class EstatesContent extends Composite<ComponentContainer> {
+    private final View<Label> title = View.create(
+            "Title", Label.class, Label.class);
 
-    private final PropertiesView propertiesView = new PropertiesView();
+    private final View<AbstractSelect> tabs = View.create(
+            "Tabs", AbstractSelect.class, Select.class);
+
+    private final View<Button> newEstate = View.create(
+            "New item", Button.class, Button.class);
+
+    private final View<Button> profile = View.create(
+            "Profile", Button.class, Button.class);
+
+    private final View<Button> signOut = View.create(
+            "Sign out", Button.class, Button.class);
+
+    private final View<AbstractSelect> estates = View.create(
+            "Estates", AbstractSelect.class, Table.class);
+
+    private final View<Label> name = View.create(
+            "Name", Label.class, Label.class);
+
+    private final View<Button> open = View.create(
+            "Open", Button.class, Button.class);
+
+    private final View<AbstractSelect> expenses = View.create(
+            "Expenses", AbstractSelect.class, Table.class);
+
+    private final View<Button> addExpense = View.create(
+            "Add expense", Button.class, Button.class);
+
+    private final Composite<ComponentContainer> navigation = Composite.create(
+            "Navigation", ComponentContainer.class, CssLayout.class);
+
+    private final Composite<ComponentContainer> userActions = Composite.create(
+            "User actions", ComponentContainer.class, CssLayout.class);
+
+    private final Composite<ComponentContainer> main = Composite.create(
+            "Main", ComponentContainer.class, CssLayout.class);
+
+    private final Composite<ComponentContainer> details = Composite.create(
+            "Details", ComponentContainer.class, CssLayout.class);
+
+    private final Composite<ComponentContainer> estateInfo = Composite.create(
+            "Estate info", ComponentContainer.class, CssLayout.class);
+
+    private final PropertiesView properties = new PropertiesView();
+
+    private final Composite<ComponentContainer> expenseManagement = Composite
+            .create(
+                    "Expense management", ComponentContainer.class,
+                    CssLayout.class);
 
     public EstatesContent() {
-        super("Root");
+        super("Root", ComponentContainer.class, CssLayout.class);
 
         setChildren(
-                new View("Navigation",
+                navigation.setChildren(
                         title, tabs, newEstate,
-                        new View("user-actions",
+                        userActions.setChildren(
                                 profile, signOut)),
-                new View("Main",
+                main.setChildren(
                         estates,
-                        new View("Details",
-                                new View("Estate info",
+                        details.setChildren(
+                                estateInfo.setChildren(
                                         name, open,
-                                        propertiesView),
-                                new View("Expense management",
+                                        properties),
+                                expenseManagement.setChildren(
                                         expenses, addExpense))));
     }
 
     public PropertiesView getPropertiesView() {
-        return propertiesView;
+        return properties;
     }
 
-    public SelectionControl getEstatesControl() {
+    public View<AbstractSelect> getEstatesView() {
         return estates;
     }
 
-    public static class PropertiesView extends View {
+    public static class PropertiesView extends Composite<ComponentContainer> {
         public static final String STATE = "State";
         public static final String DATE = "Date";
         public static final String MAX = "Max";
 
-        private final LabelControl max = new LabelControl(MAX);
-        private final LabelControl date = new LabelControl(DATE);
-        private final LabelControl state = new LabelControl(STATE);
+        private final View<Label> max = View.create(MAX, Label.class,
+                Label.class);
+        private final View<Label> date = View.create(DATE, Label.class,
+                Label.class);
+        private final View<Label> state = View.create(STATE, Label.class,
+                Label.class);
 
         public PropertiesView() {
-            super("Properties");
+            super("Properties", ComponentContainer.class,
+                    HorizontalLayout.class);
 
             setChildren(max, date, state);
         }
 
-        public LabelControl[] getProperties() {
-            return new LabelControl[] { max, date, state };
+        public View<Label>[] getProperties() {
+            @SuppressWarnings("unchecked")
+            View<Label>[] properties = new View[] { max, date, state };
+            return properties;
         }
     }
 }

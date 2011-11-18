@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.jefferson.content.LabelControl;
+import org.vaadin.jefferson.content.View;
 import org.vaadin.jefferson.demo.EstatesContent.PropertiesView;
 
 import com.vaadin.Application;
@@ -55,20 +55,19 @@ public class EstatesDemo extends Application {
         EstatesPresentation presentation = new EstatesPresentation();
 
         try {
-            mainWindow.setContent(presentation.render(content));
+            mainWindow.setContent(presentation.visit(content));
         } catch (Exception e) {
             throw new ExceptionInInitializerError(e);
         }
 
-        for (LabelControl property : content.getPropertiesView()
-                .getProperties()) {
+        for (View<Label> property : content.getPropertiesView().getProperties()) {
             Label rendition = property.getRendition();
             String name = property.getName();
             rendition.setCaption(propertyCaptions.get(name));
             rendition.setValue(propertyValues.get(name));
         }
 
-        AbstractSelect estates = content.getEstatesControl().getRendition();
+        AbstractSelect estates = content.getEstatesView().getRendition();
         estates.setContainerDataSource(
                 new IndexedContainer(Arrays.asList("A", "B", "C")));
     }
