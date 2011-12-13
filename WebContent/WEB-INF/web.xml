@@ -39,6 +39,15 @@
                         <param-value>org.vaadin.jefferson.demo.widgetset.JeffersonDemoWidgetset</param-value>
                 </init-param>
         </servlet>
+        <servlet>
+                <servlet-name>AddressBook</servlet-name>
+                <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+                <init-param>
+                        <!-- Define our application class for servlet. -->
+                        <param-name>application</param-name>
+                <param-value>org.vaadin.jefferson.demo.addressbook.AddressBookApplication</param-value>
+                </init-param>
+        </servlet>
         <servlet-mapping>
                 <servlet-name>Estates demo</servlet-name>
                 <url-pattern>/estates/*</url-pattern>
@@ -46,6 +55,10 @@
         <servlet-mapping>
                 <servlet-name>Customers demo</servlet-name>
                 <url-pattern>/customers/*</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+                <servlet-name>AddressBook</servlet-name>
+                <url-pattern>/address-book/*</url-pattern>
         </servlet-mapping>
         <servlet-mapping>
                 <servlet-name>Demo hub</servlet-name>
