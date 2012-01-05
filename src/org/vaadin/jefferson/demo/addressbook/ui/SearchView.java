@@ -1,9 +1,9 @@
 package org.vaadin.jefferson.demo.addressbook.ui;
 
 import org.vaadin.jefferson.Composite;
-import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
+import org.vaadin.jefferson.content.SelectionView;
 import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.data.SearchFilter;
@@ -15,88 +15,86 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public class SearchView extends Composite<ComponentContainer> {
-
-    private View<AbstractTextField> tf = new View<AbstractTextField>(
-            "Search term", AbstractTextField.class, TextField.class);
+    private View<AbstractTextField> searchTerm = new View<AbstractTextField>(
+            "Search term", AbstractTextField.class, new TextField());
 
     private View<AbstractSelect> fieldToSearch = new FieldToSearch();
 
-    private View<CheckBox> saveSearch = new SaveSearch("Save search",
-            CheckBox.class);
+    private View<CheckBox> saveSearch = new SaveSearch();
 
     private View<AbstractTextField> searchName = new View<AbstractTextField>(
-            "Search name", AbstractTextField.class, TextField.class);
+            "Search name", AbstractTextField.class, new TextField());
 
     private View<Button> search = new ButtonView("Search", new SearchAction());
 
     private AddressBookApplication app;
 
-    public SearchView(final AddressBookApplication app) {
-        super("Search", ComponentContainer.class, Panel.class);
+    public SearchView(String name, final AddressBookApplication app) {
+        super(name, ComponentContainer.class, new Panel());
         this.app = app;
 
-        setChildren(tf, fieldToSearch, saveSearch, searchName, search);
+        setChildren(searchTerm, fieldToSearch, saveSearch, searchName, search);
     }
 
-    @Override
-    protected void update(ComponentContainer rendition,
-            Presentation presentation) {
-        super.update(rendition, presentation);
-        saveSearch.getRendition().addListener(new ClickListener() {
-            public void buttonClick(ClickEvent event) {
-                searchName.getRendition().setVisible(
-                        saveSearch.getRendition().booleanValue());
-            }
-        });
-    }
-
-    private final class SearchAction implements Button.ClickListener {
+    private class SearchAction implements Button.ClickListener {
         public void buttonClick(ClickEvent event) {
             app.search(new SearchFilter(
                     fieldToSearch.getRendition().getValue(),
-                    tf.getRendition().getValue().toString(),
+                    searchTerm.getRendition().getValue().toString(),
                     searchName.getRendition().getValue().toString()),
                     saveSearch.getRendition().booleanValue());
         }
     }
 
-    private final static class SaveSearch extends View<CheckBox> {
-        private SaveSearch(String name, Class<CheckBox> base) {
-            super(name, base);
+    private class SaveSearch extends View<CheckBox> {
+        private SaveSearch() {
+            super("Save search", CheckBox.class);
         }
 
         @Override
-        protected void update(final CheckBox component,
-                Presentation presentation) {
-            super.update(component, presentation);
-            component.setValue(Boolean.TRUE);
-            component.setImmediate(true);
+        protected boolean setRendition(CheckBox rendition) {
+            if (!super.setRendition(rendition)) {
+                return false;
+            }
+            rendition.setValue(Boolean.TRUE);
+            rendition.setImmediate(true);
+
+            rendition.addListener(new ClickListener() {
+                public void buttonClick(ClickEvent event) {
+                    searchName.getRendition().setVisible(
+                            getRendition().booleanValue());
+                }
+            });
+
+            return true;
         }
     }
 
-    private final static class FieldToSearch extends View<AbstractSelect> {
+    private static class FieldToSearch extends SelectionView {
         private FieldToSearch() {
-            super("Field to search", AbstractSelect.class, NativeSelect.class);
+            super("Field to search");
         }
 
         @Override
-        protected void update(AbstractSelect component,
-                Presentation presentation) {
-            super.update(component, presentation);
+        protected boolean setRendition(AbstractSelect rendition) {
+            if (!super.setRendition(rendition)) {
+                return false;
+            }
             for (int i = 0; i < PersonContainer.NATURAL_COL_ORDER.length; i++) {
-                component.addItem(PersonContainer.NATURAL_COL_ORDER[i]);
-                component.setItemCaption(
+                rendition.addItem(PersonContainer.NATURAL_COL_ORDER[i]);
+                rendition.setItemCaption(
                         PersonContainer.NATURAL_COL_ORDER[i],
                         PersonContainer.COL_HEADERS_ENGLISH[i]);
             }
-            component.setValue("lastName");
-            component.setNullSelectionAllowed(false);
+            rendition.setValue("lastName");
+            rendition.setNullSelectionAllowed(false);
+
+            return true;
         }
     }
 }

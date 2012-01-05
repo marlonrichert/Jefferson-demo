@@ -1,8 +1,18 @@
 package org.vaadin.jefferson.demo.addressbook;
 
-import static org.vaadin.jefferson.demo.addressbook.AddressBookContent.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.vaadin.jefferson.Presentation;
+import org.vaadin.jefferson.View;
+import org.vaadin.jefferson.content.ButtonView;
+import org.vaadin.jefferson.content.SimpleComposite;
+import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent;
+import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent.MainView;
+import org.vaadin.jefferson.demo.addressbook.ui.ListView;
+import org.vaadin.jefferson.demo.addressbook.ui.PersonForm;
+import org.vaadin.jefferson.demo.addressbook.ui.PersonList;
+import org.vaadin.jefferson.demo.addressbook.ui.SearchView;
 
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
@@ -10,98 +20,165 @@ import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.AbstractSplitPanel;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.Form;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
+import com.vaadin.ui.themes.ChameleonTheme;
 
 public class AddressBookPresentation extends Presentation {
-    private AbstractSplitPanel main;
-    private Embedded logo;
+    private static final Map<String, String> icons = new HashMap<String, String>() {
+        {
+            put(AddressBookContent.LOGO, "images/logo.png");
+            put(AddressBookContent.SEARCH, "icons/32/folder-add.png");
+            put(AddressBookContent.SHARE, "icons/32/users.png");
+            put(AddressBookContent.HELP, "icons/32/help.png");
+            put("Add contact", "icons/32/document-add.png");
+        }
+    };
 
-    public AddressBookPresentation() {
-        define(ADDRESS_BOOK, VerticalLayout.class);
-        define(ADDRESS_BOOK, method("addressBook", AbstractOrderedLayout.class));
+    @Override
+    protected void style(View<?> view) {
+        super.style(view);
+        Component rendition = view.getRendition();
 
-        define(MAIN, HorizontalSplitPanel.class);
-        define(MAIN, method("main", AbstractSplitPanel.class));
+        if (rendition instanceof Embedded) {
+            ((Embedded) rendition).setSource(new ThemeResource(icons.get(view
+                    .getName())));
+        }
 
-        define(LIST, VerticalSplitPanel.class);
-        define(LIST, method("list", AbstractSplitPanel.class));
+        rendition.setCaption(null);
 
-        define(TOOLBAR, HorizontalLayout.class);
-        define(TOOLBAR, method("toolbar", AbstractOrderedLayout.class));
-
-        define(LOGO, method("logo", Embedded.class));
-
-        define(PERSON_LIST, method("personList", Table.class));
-
-        define(ADD_CONTACT, method("newContact", Button.class));
-        define(HELP, method("help", Button.class));
-        define(SEARCH, method("search", Button.class));
-        define(SHARE, method("share", Button.class));
+        Component parentRendition = view.getParent().getRendition();
+        if (parentRendition instanceof AbstractOrderedLayout) {
+            AbstractOrderedLayout layout = (AbstractOrderedLayout) parentRendition;
+            layout.setComponentAlignment(rendition, Alignment.MIDDLE_RIGHT);
+            layout.setExpandRatio(rendition, 1);
+        }
     }
 
-    void addressBook(AbstractOrderedLayout layout) {
-        layout.setSizeFull();
-        layout.setExpandRatio(main, 1);
+    Component create(AddressBookContent view) {
+        return new VerticalLayout();
     }
 
-    void main(AbstractSplitPanel panel) {
-        main = panel;
-        main.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-        main.setSizeFull();
+    void style(AddressBookContent view) {
+        super.style(view);
+        view.getRendition().setSizeFull();
     }
 
-    void list(AbstractSplitPanel panel) {
-        panel.addStyleName("view");
-        panel.setSplitPosition(40);
-        panel.setSizeFull();
+    Component create(ButtonView view) {
+        return new Button();
     }
 
-    void logo(Embedded embedded) {
-        logo = embedded;
-        logo.setSource(new ThemeResource("images/logo.png"));
-        logo.setCaption(null);
+    void style(ButtonView view) {
+        super.style(view);
+        Button rendition = view.getRendition();
+        rendition.setCaption(view.getName());
+        rendition.setIcon(
+                new ThemeResource(icons.get(view.getName())));
+        // rendition.addStyleName(ChameleonTheme.BUTTON_BORDERLESS);
+        rendition.addStyleName(ChameleonTheme.BUTTON_ICON_ON_TOP);
+
+        Component parentRendition = view.getParent().getRendition();
+        if (parentRendition instanceof AbstractOrderedLayout) {
+            ((AbstractOrderedLayout) parentRendition).setExpandRatio(
+                    rendition, 0);
+        }
     }
 
-    void searchContacts(Panel panel) {
-        panel.addStyleName("view");
-        panel.setSizeFull();
-        panel.setContent(new FormLayout());
+    Component create(ListView view) {
+        return new VerticalSplitPanel();
     }
 
-    void personList(Table table) {
-        table.setSizeFull();
-        table.setColumnCollapsingAllowed(true);
-        table.setColumnReorderingAllowed(true);
+    void style(ListView view) {
+        super.style(view);
+        ComponentContainer rendition = view.getRendition();
+        rendition.addStyleName("view");
+
+        if (rendition instanceof AbstractSplitPanel) {
+            ((AbstractSplitPanel) rendition).setSplitPosition(40);
+        }
+
+        rendition.setSizeFull();
     }
 
-    void toolbar(AbstractOrderedLayout toolbar) {
-        toolbar.setMargin(true);
-        toolbar.setSpacing(true);
-        toolbar.setWidth("100%");
-        toolbar.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
-        toolbar.setExpandRatio(logo, 1);
+    Component create(MainView view) {
+        return new HorizontalSplitPanel();
     }
 
-    void search(Button button) {
-        button.setIcon(new ThemeResource("icons/32/folder-add.png"));
+    void style(MainView view) {
+        super.style(view);
+        Component rendition = view.getRendition();
+
+        if (rendition instanceof AbstractSplitPanel) {
+            ((AbstractSplitPanel) rendition).setSplitPosition(
+                    200, Sizeable.UNITS_PIXELS);
+        }
+
+        rendition.setSizeFull();
+
+        Component parentRendition = view.getParent().getRendition();
+        if (parentRendition instanceof AbstractOrderedLayout) {
+            ((AbstractOrderedLayout) parentRendition).setExpandRatio(
+                    rendition, 1);
+        }
     }
 
-    void share(Button button) {
-        button.setIcon(new ThemeResource("icons/32/users.png"));
+    Component create(PersonForm view) {
+        Form rendition = new Form();
+        rendition.setFooter(new HorizontalLayout());
+        return rendition;
     }
 
-    void help(Button button) {
-        button.setIcon(new ThemeResource("icons/32/help.png"));
+    void style(PersonForm view) {
+        Form rendition = view.getRendition();
+        Layout footer = rendition.getFooter();
+        if (footer instanceof AbstractOrderedLayout) {
+            ((HorizontalLayout) footer).setSpacing(true);
+        }
     }
 
-    void newContact(Button button) {
-        button.setIcon(new ThemeResource("icons/32/document-add.png"));
+    void style(PersonList view) {
+        super.style(view);
+        Table rendition = view.getRendition();
+        rendition.setSizeFull();
+        rendition.setColumnCollapsingAllowed(true);
+        rendition.setColumnReorderingAllowed(true);
+    }
+
+    void style(SearchView view) {
+        super.style(view);
+        ComponentContainer rendition = view.getRendition();
+        rendition.addStyleName("view");
+        rendition.setSizeFull();
+
+        if (rendition instanceof Panel) {
+            ((Panel) rendition).setContent(new FormLayout());
+        }
+    }
+
+    Component create(SimpleComposite view) {
+        return new HorizontalLayout();
+    }
+
+    void style(SimpleComposite view) {
+        super.style(view);
+        ComponentContainer rendition = view.getRendition();
+
+        if (rendition instanceof AbstractOrderedLayout) {
+            AbstractOrderedLayout layout = (AbstractOrderedLayout) rendition;
+            layout.setMargin(true);
+            layout.setSpacing(true);
+        }
+
+        rendition.setWidth("100%");
     }
 }

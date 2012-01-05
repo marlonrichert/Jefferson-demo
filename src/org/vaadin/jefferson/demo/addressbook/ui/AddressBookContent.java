@@ -1,17 +1,12 @@
-package org.vaadin.jefferson.demo.addressbook;
+package org.vaadin.jefferson.demo.addressbook.ui;
 
 import org.vaadin.jefferson.Composite;
-import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SimpleComposite;
+import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.data.SearchFilter;
-import org.vaadin.jefferson.demo.addressbook.ui.ListView;
-import org.vaadin.jefferson.demo.addressbook.ui.NavigationTree;
-import org.vaadin.jefferson.demo.addressbook.ui.PersonForm;
-import org.vaadin.jefferson.demo.addressbook.ui.PersonList;
-import org.vaadin.jefferson.demo.addressbook.ui.SearchView;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -22,21 +17,13 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Tree;
 
-class AddressBookContent extends SimpleComposite {
-    static final String ADD_CONTACT = "Add contact";
-    static final String ADDRESS_BOOK = "Address book";
-    static final String HELP = "Help";
-    static final String LIST = "List";
-    static final String LOGO = "Logo";
-    static final String MAIN = "Main";
-    static final String PERSON_FORM = "Person form";
-    static final String PERSON_LIST = "Person list";
-    static final String SEARCH = "Search";
-    static final String SHARE = "Share";
-    static final String TOOLBAR = "Toolbar";
-    static final String TREE = "Tree";
+public class AddressBookContent extends SimpleComposite {
+    public static final String HELP = "Help";
+    public static final String LOGO = "Logo";
+    public static final String SEARCH = "Search";
+    public static final String SHARE = "Share";
 
-    View<Button> newContactButton = new ButtonView(ADD_CONTACT,
+    View<Button> newContactButton = new ButtonView("Add contact",
             new ClickListener() {
                 public void buttonClick(ClickEvent event) {
                     app.addNewContact();
@@ -62,35 +49,34 @@ class AddressBookContent extends SimpleComposite {
                 }
             });
 
-    TreeView tree = new TreeView(TREE, Tree.class);
+    public TreeView tree = new TreeView("Tree", Tree.class);
 
     MainView main;
-    ListView list;
+    public ListView list;
     SearchView search;
 
-    private Composite<ComponentContainer> toolbar = new SimpleComposite(
-            TOOLBAR);
-
     private View<Embedded> logo = new View<Embedded>(LOGO, Embedded.class);
+
+    private Composite<ComponentContainer> toolbar = new SimpleComposite(
+            "Toolbar", newContactButton, searchButton, shareButton,
+            helpButton, logo);
 
     private AddressBookApplication app;
 
     public AddressBookContent(AddressBookApplication app) {
-        super(ADDRESS_BOOK);
+        super("Address book");
         this.app = app;
         PersonContainer dataSource = app.getDataSource();
 
-        list = new ListView(LIST,
-                new PersonList(PERSON_LIST, dataSource),
-                new PersonForm(PERSON_FORM, dataSource));
-        search = new SearchView(app);
+        list = new ListView("List",
+                new PersonList("Person list", dataSource),
+                new PersonForm("Person form", dataSource));
+        search = new SearchView("Search contacts", app);
 
         main = new MainView(tree, list);
 
         setChildren(
-                toolbar.setChildren(
-                        newContactButton, searchButton, shareButton,
-                        helpButton, logo),
+                toolbar,
                 main);
     }
 
@@ -112,14 +98,19 @@ class AddressBookContent extends SimpleComposite {
         }
 
         @Override
-        protected void update(Tree component, Presentation presentation) {
-            super.update(component, presentation);
-            component.addListener(new ValueChangeListener() {
+        protected boolean setRendition(Tree rendition) {
+            if (!super.setRendition(rendition)) {
+                return false;
+            }
+
+            rendition.addListener(new ValueChangeListener() {
 
                 public void valueChange(ValueChangeEvent event) {
                     app.setItemId(event.getProperty().getValue());
                 }
             });
+
+            return true;
         }
 
         public void addSearch(SearchFilter searchFilter) {
@@ -142,7 +133,7 @@ class AddressBookContent extends SimpleComposite {
         private View<?> contentView;
 
         public MainView(TreeView tree, View<?> contentView) {
-            super(MAIN);
+            super("Main");
             this.contentView = contentView;
 
             setChildren(
@@ -151,7 +142,7 @@ class AddressBookContent extends SimpleComposite {
         }
 
         public void setContentView(View<?> contentView) {
-            if (replaceChild(contentView, contentView)) {
+            if (replaceChild(this.contentView, contentView)) {
                 getRendition().replaceComponent(
                         this.contentView.getRendition(),
                         contentView.getRendition());

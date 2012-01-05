@@ -2,6 +2,7 @@ package org.vaadin.jefferson.demo.addressbook;
 
 import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.data.SearchFilter;
+import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent;
 import org.vaadin.jefferson.demo.addressbook.ui.HelpWindow;
 import org.vaadin.jefferson.demo.addressbook.ui.NavigationTree;
 import org.vaadin.jefferson.demo.addressbook.ui.SharingOptions;
@@ -36,7 +37,7 @@ public class AddressBookApplication extends Application {
         setTheme("contacts");
 
         getMainWindow()
-                .setContent(new AddressBookPresentation().render(content));
+                .setContent(new AddressBookPresentation().visit(content));
     }
 
     private HorizontalLayout createToolbar() {
@@ -75,7 +76,7 @@ public class AddressBookApplication extends Application {
         return dataSource;
     }
 
-    void showHelpWindow() {
+    public void showHelpWindow() {
         getMainWindow().addWindow(getHelpWindow());
     }
 

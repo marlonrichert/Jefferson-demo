@@ -5,7 +5,6 @@ import org.vaadin.jefferson.content.SimpleComposite;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Table;
 
 public class ListView extends SimpleComposite {
@@ -21,9 +20,8 @@ public class ListView extends SimpleComposite {
     }
 
     @Override
-    protected void update(ComponentContainer rendition,
-            Presentation presentation) {
-        super.update(rendition, presentation);
+    protected void accept(Presentation presentation) {
+        super.accept(presentation);
 
         personList.getRendition().addListener(new ValueChangeListener() {
 

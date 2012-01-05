@@ -3,7 +3,6 @@ package org.vaadin.jefferson.demo.addressbook.ui;
 import java.util.Arrays;
 import java.util.List;
 
-import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.data.Person;
 import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
@@ -20,7 +19,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
@@ -41,24 +40,23 @@ public class PersonForm extends View<Form> implements ClickListener {
     }
 
     @Override
-    protected void update(Form form, Presentation presentation) {
-        super.update(form, presentation);
+    protected boolean setRendition(Form rendition) {
+        if (!super.setRendition(rendition)) {
+            return false;
+        }
 
         /*
          * Enable buffering so that commit() must be called for the form before
          * input is written to the data. (Form input is not written immediately
          * through to the underlying object.)
          */
-        form.setWriteThrough(false);
+        rendition.setWriteThrough(false);
 
-        HorizontalLayout footer = new HorizontalLayout();
-        footer.setSpacing(true);
+        Layout footer = rendition.getFooter();
         footer.addComponent(save);
         footer.addComponent(cancel);
         footer.addComponent(edit);
         footer.setVisible(false);
-
-        form.setFooter(footer);
 
         /* Allow the user to enter new cities */
         cities.setNewItemsAllowed(true);
@@ -80,7 +78,7 @@ public class PersonForm extends View<Form> implements ClickListener {
          * Field factory for overriding how the component for city selection is
          * created
          */
-        form.setFormFieldFactory(new DefaultFieldFactory() {
+        rendition.setFormFieldFactory(new DefaultFieldFactory() {
             @Override
             public Field createField(Item item, Object propertyId,
                     Component uiContext) {
@@ -114,6 +112,8 @@ public class PersonForm extends View<Form> implements ClickListener {
                 return field;
             }
         });
+
+        return true;
     }
 
     public void buttonClick(ClickEvent event) {

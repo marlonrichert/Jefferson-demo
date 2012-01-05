@@ -1,6 +1,5 @@
 package org.vaadin.jefferson.demo.addressbook.ui;
 
-import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.data.Person;
 import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
@@ -22,20 +21,24 @@ public class PersonList extends View<Table> {
     }
 
     @Override
-    protected void update(Table component, Presentation presentation) {
-        super.update(component, presentation);
+    protected boolean setRendition(Table rendition) {
+        if (!super.setRendition(rendition)) {
+            return false;
+        }
 
-        component.setContainerDataSource(dataSource);
+        rendition.setContainerDataSource(dataSource);
 
-        component.setVisibleColumns(PersonContainer.NATURAL_COL_ORDER);
-        component.setColumnHeaders(PersonContainer.COL_HEADERS_ENGLISH);
+        rendition.setVisibleColumns(PersonContainer.NATURAL_COL_ORDER);
+        rendition.setColumnHeaders(PersonContainer.COL_HEADERS_ENGLISH);
 
-        component.setSelectable(true);
-        component.setImmediate(true);
+        rendition.setSelectable(true);
+        rendition.setImmediate(true);
 
-        component.setNullSelectionAllowed(false);
+        rendition.setNullSelectionAllowed(false);
 
-        component.addGeneratedColumn("email", new EmailColumn());
+        rendition.addGeneratedColumn("email", new EmailColumn());
+
+        return true;
     }
 
     private final static class EmailColumn implements ColumnGenerator {
