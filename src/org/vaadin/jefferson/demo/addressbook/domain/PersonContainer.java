@@ -1,4 +1,4 @@
-package org.vaadin.jefferson.demo.addressbook.data;
+package org.vaadin.jefferson.demo.addressbook.domain;
 
 import java.util.Random;
 

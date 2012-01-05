@@ -1,10 +1,10 @@
 package org.vaadin.jefferson.demo.addressbook;
 
-import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
-import org.vaadin.jefferson.demo.addressbook.data.SearchFilter;
-import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent;
-import org.vaadin.jefferson.demo.addressbook.ui.HelpWindow;
-import org.vaadin.jefferson.demo.addressbook.ui.SharingOptions;
+import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent;
+import org.vaadin.jefferson.demo.addressbook.content.HelpWindow;
+import org.vaadin.jefferson.demo.addressbook.content.SharingOptions;
+import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
+import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Window;

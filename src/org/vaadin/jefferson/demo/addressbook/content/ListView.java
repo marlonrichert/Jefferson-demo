@@ -1,4 +1,4 @@
-package org.vaadin.jefferson.demo.addressbook.ui;
+package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.content.SimpleComposite;

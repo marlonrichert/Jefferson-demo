@@ -1,8 +1,8 @@
-package org.vaadin.jefferson.demo.addressbook.ui;
+package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.demo.addressbook.data.Person;
-import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
+import org.vaadin.jefferson.demo.addressbook.domain.Person;
+import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 
 import com.vaadin.data.Container;
 import com.vaadin.terminal.ExternalResource;

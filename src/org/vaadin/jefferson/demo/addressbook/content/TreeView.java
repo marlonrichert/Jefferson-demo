@@ -1,8 +1,8 @@
-package org.vaadin.jefferson.demo.addressbook.ui;
+package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
-import org.vaadin.jefferson.demo.addressbook.data.SearchFilter;
+import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

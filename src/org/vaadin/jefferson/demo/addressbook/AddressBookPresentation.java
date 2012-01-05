@@ -7,13 +7,13 @@ import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent;
-import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent.MainView;
-import org.vaadin.jefferson.demo.addressbook.ui.ListView;
-import org.vaadin.jefferson.demo.addressbook.ui.PersonForm;
-import org.vaadin.jefferson.demo.addressbook.ui.PersonList;
-import org.vaadin.jefferson.demo.addressbook.ui.SearchView;
-import org.vaadin.jefferson.demo.addressbook.ui.TreeView;
+import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent;
+import org.vaadin.jefferson.demo.addressbook.content.ListView;
+import org.vaadin.jefferson.demo.addressbook.content.PersonForm;
+import org.vaadin.jefferson.demo.addressbook.content.PersonList;
+import org.vaadin.jefferson.demo.addressbook.content.SearchView;
+import org.vaadin.jefferson.demo.addressbook.content.TreeView;
+import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent.MainView;
 
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
@@ -85,8 +85,7 @@ public class AddressBookPresentation extends Presentation {
         super.style(view);
         Button rendition = view.getRendition();
         rendition.setCaption(view.getName());
-        rendition.setIcon(
-                new ThemeResource(icons.get(view.getName())));
+        rendition.setIcon(new ThemeResource(icons.get(view.getName())));
         rendition.addStyleName(ChameleonTheme.BUTTON_BORDERLESS);
         // rendition.addStyleName(ChameleonTheme.BUTTON_ICON_ON_TOP);
 

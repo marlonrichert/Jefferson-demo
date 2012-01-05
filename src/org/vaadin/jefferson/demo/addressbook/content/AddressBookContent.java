@@ -1,11 +1,11 @@
-package org.vaadin.jefferson.demo.addressbook.ui;
+package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.Composite;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
-import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
+import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

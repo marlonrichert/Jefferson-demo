@@ -1,4 +1,4 @@
-package org.vaadin.jefferson.demo.addressbook.ui;
+package org.vaadin.jefferson.demo.addressbook.content;
 
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
