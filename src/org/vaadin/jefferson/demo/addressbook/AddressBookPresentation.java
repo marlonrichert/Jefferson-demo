@@ -8,12 +8,12 @@ import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent;
+import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent.MainView;
 import org.vaadin.jefferson.demo.addressbook.content.ListView;
 import org.vaadin.jefferson.demo.addressbook.content.PersonForm;
 import org.vaadin.jefferson.demo.addressbook.content.PersonList;
 import org.vaadin.jefferson.demo.addressbook.content.SearchView;
 import org.vaadin.jefferson.demo.addressbook.content.TreeView;
-import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent.MainView;
 
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
@@ -98,6 +98,7 @@ public class AddressBookPresentation extends Presentation {
 
     Component create(ListView view) {
         return new VerticalSplitPanel();
+        // return new VerticalLayout();
     }
 
     void style(ListView view) {
@@ -114,6 +115,7 @@ public class AddressBookPresentation extends Presentation {
 
     Component create(MainView view) {
         return new HorizontalSplitPanel();
+        // return new HorizontalLayout();
     }
 
     void style(MainView view) {
@@ -153,7 +155,7 @@ public class AddressBookPresentation extends Presentation {
         Table rendition = view.getRendition();
 
         rendition.addStyleName(ChameleonTheme.TABLE_BORDERLESS);
-        rendition.addStyleName(ChameleonTheme.TABLE_SMALL);
+        // rendition.addStyleName(ChameleonTheme.TABLE_SMALL);
         rendition.addStyleName(ChameleonTheme.TABLE_STRIPED);
         rendition.addStyleName("strong");
 

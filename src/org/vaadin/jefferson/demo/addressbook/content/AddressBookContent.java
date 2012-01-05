@@ -80,15 +80,11 @@ public class AddressBookContent extends SimpleComposite {
     }
 
     public void showListView() {
-        setContentView(list);
+        main.setContentView(list);
     }
 
     public void showSearchView() {
-        setContentView(search);
-    }
-
-    private void setContentView(View<?> v) {
-        main.setContentView(v);
+        main.setContentView(search);
     }
 
     public static class MainView extends SimpleComposite {
@@ -104,12 +100,8 @@ public class AddressBookContent extends SimpleComposite {
         }
 
         public void setContentView(View<?> contentView) {
-            if (replaceChild(this.contentView, contentView)) {
-                getRendition().replaceComponent(
-                        this.contentView.getRendition(),
-                        contentView.getRendition());
-                this.contentView = contentView;
-            }
+            replaceChild(this.contentView, contentView);
+            this.contentView = contentView;
         }
     }
 }

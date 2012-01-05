@@ -62,8 +62,8 @@ public class AddressBookApplication extends Application {
     }
 
     public void addNewContact() {
-        content.list.personForm.addContact();
         content.showListView();
+        content.list.personForm.addContact();
     }
 
     public void search(SearchFilter searchFilter, boolean save) {
