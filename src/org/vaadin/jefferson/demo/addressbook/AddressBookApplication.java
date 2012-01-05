@@ -4,14 +4,9 @@ import org.vaadin.jefferson.demo.addressbook.data.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.data.SearchFilter;
 import org.vaadin.jefferson.demo.addressbook.ui.AddressBookContent;
 import org.vaadin.jefferson.demo.addressbook.ui.HelpWindow;
-import org.vaadin.jefferson.demo.addressbook.ui.NavigationTree;
 import org.vaadin.jefferson.demo.addressbook.ui.SharingOptions;
 
 import com.vaadin.Application;
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
@@ -38,24 +33,6 @@ public class AddressBookApplication extends Application {
 
         getMainWindow()
                 .setContent(new AddressBookPresentation().visit(content));
-    }
-
-    private HorizontalLayout createToolbar() {
-        HorizontalLayout lo = new HorizontalLayout();
-
-        lo.setMargin(true);
-        lo.setSpacing(true);
-
-        lo.setStyleName("toolbar");
-
-        lo.setWidth("100%");
-
-        Embedded em = new Embedded("", new ThemeResource("images/logo.png"));
-        lo.addComponent(em);
-        lo.setComponentAlignment(em, Alignment.MIDDLE_RIGHT);
-        lo.setExpandRatio(em, 1);
-
-        return lo;
     }
 
     private HelpWindow getHelpWindow() {
@@ -127,11 +104,11 @@ public class AddressBookApplication extends Application {
 
     public void setItemId(Object itemId) {
         if (itemId != null) {
-            if (NavigationTree.SHOW_ALL.equals(itemId)) {
+            if (AddressBookContent.SHOW_ALL.equals(itemId)) {
                 // clear previous filters
                 getDataSource().removeAllContainerFilters();
                 content.showListView();
-            } else if (NavigationTree.SEARCH.equals(itemId)) {
+            } else if (AddressBookContent.SEARCH.equals(itemId)) {
                 content.showSearchView();
             } else if (itemId instanceof SearchFilter) {
                 search((SearchFilter) itemId, false);

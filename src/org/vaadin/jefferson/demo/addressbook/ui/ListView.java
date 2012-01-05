@@ -11,8 +11,8 @@ public class ListView extends SimpleComposite {
     public PersonForm personForm;
     private PersonList personList;
 
-    public ListView(String name, PersonList personList, PersonForm personForm) {
-        super(name);
+    public ListView(PersonList personList, PersonForm personForm) {
+        super("List");
         this.personList = personList;
         this.personForm = personForm;
 

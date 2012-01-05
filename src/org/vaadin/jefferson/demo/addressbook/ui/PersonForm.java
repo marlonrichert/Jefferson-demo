@@ -34,8 +34,8 @@ public class PersonForm extends View<Form> implements ClickListener {
     private Person newPerson = null;
     private PersonContainer dataSource;
 
-    public PersonForm(String name, PersonContainer dataSource) {
-        super(name, Form.class);
+    public PersonForm(PersonContainer dataSource) {
+        super("Person form", Form.class);
         this.dataSource = dataSource;
     }
 
