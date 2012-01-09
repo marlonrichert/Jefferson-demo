@@ -6,7 +6,6 @@ import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SelectionView;
 import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.content.TextView;
-import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
@@ -29,18 +28,18 @@ public class SearchView extends SimpleComposite {
 
     private View<Button> search = new ButtonView("Search", new SearchAction());
 
-    private AddressBookApplication app;
+    private ContentRoot root;
 
-    public SearchView(String name, final AddressBookApplication app) {
-        super(name);
-        this.app = app;
+    public SearchView(ContentRoot root) {
+        super("Search contacts");
+        this.root = root;
 
         setChildren(searchTerm, fieldToSearch, saveSearch, searchName, search);
     }
 
     private class SearchAction implements Button.ClickListener {
         public void buttonClick(ClickEvent event) {
-            app.search(new SearchFilter(
+            root.search(new SearchFilter(
                     fieldToSearch.getRendition().getValue(),
                     searchTerm.getRendition().getValue().toString(),
                     searchName.getRendition().getValue().toString()),

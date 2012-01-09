@@ -16,9 +16,9 @@ import com.vaadin.ui.Table.ColumnGenerator;
 public class PersonList extends View<Table> {
     private Container dataSource;
 
-    public PersonList(Container dataSource) {
+    public PersonList(ContentRoot root) {
         super("Person list", Table.class);
-        this.dataSource = dataSource;
+        dataSource = root.getDataSource();
     }
 
     @Override

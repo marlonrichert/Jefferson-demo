@@ -2,7 +2,6 @@ package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
 import com.vaadin.event.ItemClickEvent;
@@ -13,11 +12,11 @@ public final class TreeView extends View<Tree> {
     public static final Object SHOW_ALL = "Show all";
     public static final Object SEARCH = "Search";
 
-    private final AddressBookApplication app;
+    private ContentRoot root;
 
-    TreeView(AddressBookApplication app) {
+    TreeView(ContentRoot root) {
         super("Tree", Tree.class);
-        this.app = app;
+        this.root = root;
     }
 
     @Override
@@ -45,14 +44,25 @@ public final class TreeView extends View<Tree> {
         rendition.addListener(new ItemClickListener() {
 
             public void itemClick(ItemClickEvent event) {
-                app.setItemId(event.getItemId());
+                Object itemId = event.getItemId();
+                if (itemId != null) {
+                    if (TreeView.SHOW_ALL.equals(itemId)) {
+                        // clear previous filters
+                        root.getDataSource().removeAllContainerFilters();
+                        root.showListView();
+                    } else if (TreeView.SEARCH.equals(itemId)) {
+                        root.showSearchView();
+                    } else if (itemId instanceof SearchFilter) {
+                        root.search((SearchFilter) itemId, false);
+                    }
+                }
             }
         });
 
         return rendition;
     }
 
-    public void addSearch(SearchFilter searchFilter) {
+    protected void addSearch(SearchFilter searchFilter) {
         Tree rendition = getRendition();
         rendition.addItem(searchFilter);
         rendition.setParent(searchFilter, SEARCH);

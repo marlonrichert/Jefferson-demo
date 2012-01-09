@@ -35,9 +35,9 @@ public class PersonForm extends View<Form> implements ClickListener {
     private Person newPerson = null;
     private PersonContainer dataSource;
 
-    public PersonForm(PersonContainer dataSource) {
+    public PersonForm(ContentRoot root) {
         super("Person form", Form.class);
-        this.dataSource = dataSource;
+        dataSource = root.getDataSource();
     }
 
     @Override
@@ -157,7 +157,7 @@ public class PersonForm extends View<Form> implements ClickListener {
         }
     }
 
-    public void setDataSource(Item newDataSource) {
+    protected void setDataSource(Item newDataSource) {
         newContactMode = false;
         Form form = getRendition();
         if (newDataSource != null) {
@@ -173,14 +173,14 @@ public class PersonForm extends View<Form> implements ClickListener {
         }
     }
 
-    public void setReadOnly(boolean readOnly) {
+    private void setReadOnly(boolean readOnly) {
         getRendition().setReadOnly(readOnly);
         save.setVisible(!readOnly);
         cancel.setVisible(!readOnly);
         edit.setVisible(readOnly);
     }
 
-    public void addContact() {
+    protected void addContact() {
         // Create a temporary item for the form
         newPerson = new Person();
         setDataSource(new BeanItem<Person>(newPerson));
