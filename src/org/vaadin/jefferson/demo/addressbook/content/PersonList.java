@@ -1,5 +1,6 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
+import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.domain.Person;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
@@ -21,10 +22,13 @@ public class PersonList extends View<Table> {
     }
 
     @Override
-    protected boolean setRendition(Table rendition) {
-        if (!super.setRendition(rendition)) {
-            return false;
-        }
+    public Table createFallback() {
+        return new Table();
+    }
+
+    @Override
+    protected Table accept(Presentation presentation) {
+        Table rendition = super.accept(presentation);
 
         rendition.setContainerDataSource(dataSource);
 
@@ -38,7 +42,7 @@ public class PersonList extends View<Table> {
 
         rendition.addGeneratedColumn("email", new EmailColumn());
 
-        return true;
+        return rendition;
     }
 
     private final static class EmailColumn implements ColumnGenerator {

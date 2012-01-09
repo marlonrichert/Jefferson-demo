@@ -1,7 +1,7 @@
 @import url(../chameleon/styles.css);
 
 /*
- * Chameleon theme styles
+ * Chameleon theme generated styles
  */
 
 /* Application background */
@@ -141,6 +141,11 @@ input.v-textfield,textarea.v-textarea,.v-filterselect {
 	position: absolute;
 	right: 0;
 }
+
 .tree {
 	padding: 0;
+}
+
+.v-table .v-selected .v-link a {
+	color: rgb(247, 248, 249);
 }

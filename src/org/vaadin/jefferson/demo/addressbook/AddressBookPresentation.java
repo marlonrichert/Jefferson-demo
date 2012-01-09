@@ -3,16 +3,18 @@ package org.vaadin.jefferson.demo.addressbook;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.vaadin.jefferson.Composite;
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent;
-import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent.MainView;
+import org.vaadin.jefferson.demo.addressbook.content.ContentRoot;
+import org.vaadin.jefferson.demo.addressbook.content.ContentRoot.MainView;
 import org.vaadin.jefferson.demo.addressbook.content.ListView;
 import org.vaadin.jefferson.demo.addressbook.content.PersonForm;
 import org.vaadin.jefferson.demo.addressbook.content.PersonList;
 import org.vaadin.jefferson.demo.addressbook.content.SearchView;
+import org.vaadin.jefferson.demo.addressbook.content.Toolbar;
 import org.vaadin.jefferson.demo.addressbook.content.TreeView;
 
 import com.vaadin.terminal.Sizeable;
@@ -30,6 +32,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Tree;
@@ -40,11 +43,11 @@ import com.vaadin.ui.themes.ChameleonTheme;
 public class AddressBookPresentation extends Presentation {
     private static final Map<String, String> icons = new HashMap<String, String>() {
         {
-            put(AddressBookContent.LOGO, "images/logo.png");
-            put(AddressBookContent.SEARCH, "icons/32/folder-add.png");
-            put(AddressBookContent.SHARE, "icons/32/users.png");
-            put(AddressBookContent.HELP, "icons/32/help.png");
-            put("Add contact", "icons/32/document-add.png");
+            put(Toolbar.ADD_CONTACT, "icons/32/document-add.png");
+            put(Toolbar.LOGO, "images/logo.png");
+            put(Toolbar.SEARCH, "icons/32/folder-add.png");
+            put(Toolbar.SHARE, "icons/32/users.png");
+            put(Toolbar.HELP, "icons/32/help.png");
         }
     };
 
@@ -68,43 +71,47 @@ public class AddressBookPresentation extends Presentation {
         }
     }
 
-    Component create(AddressBookContent view) {
+    Component render(ContentRoot view) {
         return new VerticalLayout();
     }
 
-    void style(AddressBookContent view) {
+    void style(ContentRoot view) {
         super.style(view);
         view.getRendition().setSizeFull();
     }
 
-    Component create(ButtonView view) {
-        return new Button();
+    Component render(ButtonView view) {
+        return view.getParent() instanceof Toolbar
+                ? new Button()
+                : new NativeButton();
     }
 
     void style(ButtonView view) {
         super.style(view);
         Button rendition = view.getRendition();
         rendition.setCaption(view.getName());
-        rendition.setIcon(new ThemeResource(icons.get(view.getName())));
-        rendition.addStyleName(ChameleonTheme.BUTTON_BORDERLESS);
-        // rendition.addStyleName(ChameleonTheme.BUTTON_ICON_ON_TOP);
 
-        Component parentRendition = view.getParent().getRendition();
+        Composite<?> parent = view.getParent();
+
+        if (parent instanceof Toolbar) {
+            rendition.setIcon(new ThemeResource(icons.get(view.getName())));
+            rendition.addStyleName(ChameleonTheme.BUTTON_BORDERLESS);
+        }
+
+        Component parentRendition = parent.getRendition();
         if (parentRendition instanceof AbstractOrderedLayout) {
             ((AbstractOrderedLayout) parentRendition).setExpandRatio(
                     rendition, 0);
         }
     }
 
-    Component create(ListView view) {
+    Component render(ListView view) {
         return new VerticalSplitPanel();
-        // return new VerticalLayout();
     }
 
     void style(ListView view) {
         super.style(view);
         ComponentContainer rendition = view.getRendition();
-        rendition.addStyleName("view");
 
         if (rendition instanceof AbstractSplitPanel) {
             ((AbstractSplitPanel) rendition).setSplitPosition(40);
@@ -113,9 +120,8 @@ public class AddressBookPresentation extends Presentation {
         rendition.setSizeFull();
     }
 
-    Component create(MainView view) {
+    Component render(MainView view) {
         return new HorizontalSplitPanel();
-        // return new HorizontalLayout();
     }
 
     void style(MainView view) {
@@ -136,7 +142,7 @@ public class AddressBookPresentation extends Presentation {
         }
     }
 
-    Component create(PersonForm view) {
+    Component render(PersonForm view) {
         Form rendition = new Form();
         rendition.setFooter(new HorizontalLayout());
         return rendition;
@@ -155,7 +161,6 @@ public class AddressBookPresentation extends Presentation {
         Table rendition = view.getRendition();
 
         rendition.addStyleName(ChameleonTheme.TABLE_BORDERLESS);
-        // rendition.addStyleName(ChameleonTheme.TABLE_SMALL);
         rendition.addStyleName(ChameleonTheme.TABLE_STRIPED);
         rendition.addStyleName("strong");
 
@@ -164,18 +169,24 @@ public class AddressBookPresentation extends Presentation {
         rendition.setColumnReorderingAllowed(true);
     }
 
+    Component render(SearchView view) {
+        Panel rendition = new Panel();
+        rendition.setContent(new FormLayout());
+        return rendition;
+    }
+
     void style(SearchView view) {
         super.style(view);
         ComponentContainer rendition = view.getRendition();
-        rendition.addStyleName("view");
         rendition.setSizeFull();
 
-        if (rendition instanceof Panel) {
-            ((Panel) rendition).setContent(new FormLayout());
+        rendition.setCaption(view.getName());
+        for (View<?> child : view.getChildren()) {
+            child.getRendition().setCaption(child.getName());
         }
     }
 
-    Component create(SimpleComposite view) {
+    Component render(SimpleComposite view) {
         return new CssLayout();
     }
 

@@ -3,6 +3,7 @@ package org.vaadin.jefferson.demo.addressbook.content;
 import java.util.Arrays;
 import java.util.List;
 
+import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.domain.Person;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
@@ -40,10 +41,13 @@ public class PersonForm extends View<Form> implements ClickListener {
     }
 
     @Override
-    protected boolean setRendition(Form rendition) {
-        if (!super.setRendition(rendition)) {
-            return false;
-        }
+    public Form createFallback() {
+        return new Form();
+    }
+
+    @Override
+    protected Form accept(Presentation presentation) {
+        Form rendition = super.accept(presentation);
 
         /*
          * Enable buffering so that commit() must be called for the form before
@@ -113,7 +117,7 @@ public class PersonForm extends View<Form> implements ClickListener {
             }
         });
 
-        return true;
+        return rendition;
     }
 
     public void buttonClick(ClickEvent event) {

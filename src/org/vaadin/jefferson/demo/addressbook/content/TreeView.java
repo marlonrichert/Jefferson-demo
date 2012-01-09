@@ -1,5 +1,6 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
+import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
@@ -9,9 +10,9 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Tree;
 
 public final class TreeView extends View<Tree> {
-    /**
-     * 
-     */
+    public static final Object SHOW_ALL = "Show all";
+    public static final Object SEARCH = "Search";
+
     private final AddressBookApplication app;
 
     TreeView(AddressBookApplication app) {
@@ -20,15 +21,18 @@ public final class TreeView extends View<Tree> {
     }
 
     @Override
-    protected boolean setRendition(Tree rendition) {
-        if (!super.setRendition(rendition)) {
-            return false;
-        }
+    public Tree createFallback() {
+        return new Tree();
+    }
 
-        rendition.addItem(AddressBookContent.SHOW_ALL);
-        rendition.addItem(AddressBookContent.SEARCH);
+    @Override
+    protected Tree accept(Presentation presentation) {
+        Tree rendition = super.accept(presentation);
 
-        rendition.setChildrenAllowed(AddressBookContent.SHOW_ALL, false);
+        rendition.addItem(SHOW_ALL);
+        rendition.addItem(SEARCH);
+
+        rendition.setChildrenAllowed(SHOW_ALL, false);
 
         /*
          * We want items to be selectable but do not want the user to be able to
@@ -44,19 +48,19 @@ public final class TreeView extends View<Tree> {
             }
         });
 
-        return true;
+        return rendition;
     }
 
     public void addSearch(SearchFilter searchFilter) {
         Tree rendition = getRendition();
         rendition.addItem(searchFilter);
-        rendition.setParent(searchFilter, AddressBookContent.SEARCH);
+        rendition.setParent(searchFilter, SEARCH);
 
         // mark the saved search as a leaf (cannot have children)
         rendition.setChildrenAllowed(searchFilter, false);
 
         // make sure "Search" is expanded
-        rendition.expandItem(AddressBookContent.SEARCH);
+        rendition.expandItem(SEARCH);
 
         // select the saved search
         rendition.setValue(searchFilter);

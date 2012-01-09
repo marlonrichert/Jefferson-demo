@@ -1,69 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>Jefferson-demo</display-name>
 	<context-param>
-		<description>
-		Vaadin production mode</description>
+		<description>Vaadin production mode</description>
 		<param-name>productionMode</param-name>
 		<param-value>false</param-value>
 	</context-param>
-        <servlet>
-                <servlet-name>Demo hub</servlet-name>
-                <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
-                <init-param>
-                        <param-name>application</param-name>
-                        <param-value>org.vaadin.jefferson.demo.DemoApplication</param-value>
-                </init-param>
-        </servlet>
 	<servlet>
-		<servlet-name>Estates demo</servlet-name>
+		<servlet-name>Demo hub</servlet-name>
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
 		<init-param>
 			<param-name>application</param-name>
-			<param-value>org.vaadin.jefferson.demo.EstatesDemo</param-value>
-		</init-param>
-		<init-param>
-			<param-name>widgetset</param-name>
-			<param-value>org.vaadin.jefferson.demo.widgetset.JeffersonDemoWidgetset</param-value>
+			<param-value>org.vaadin.jefferson.demo.DemoApplication</param-value>
 		</init-param>
 	</servlet>
-        <servlet>
-                <servlet-name>Customers demo</servlet-name>
-                <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
-                <init-param>
-                        <param-name>application</param-name>
-                        <param-value>org.vaadin.jefferson.demo.CustomersDemo</param-value>
-                </init-param>
-                <init-param>
-                        <param-name>widgetset</param-name>
-                        <param-value>org.vaadin.jefferson.demo.widgetset.JeffersonDemoWidgetset</param-value>
-                </init-param>
-        </servlet>
-        <servlet>
-                <servlet-name>AddressBook</servlet-name>
-                <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
-                <init-param>
-                        <!-- Define our application class for servlet. -->
-                        <param-name>application</param-name>
-                <param-value>org.vaadin.jefferson.demo.addressbook.AddressBookApplication</param-value>
-                </init-param>
-        </servlet>
-        <servlet-mapping>
-                <servlet-name>Estates demo</servlet-name>
-                <url-pattern>/estates/*</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
-                <servlet-name>Customers demo</servlet-name>
-                <url-pattern>/customers/*</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
-                <servlet-name>AddressBook</servlet-name>
-                <url-pattern>/address-book/*</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
-                <servlet-name>Demo hub</servlet-name>
-                <url-pattern>/VAADIN/*</url-pattern>
-        </servlet-mapping>
+	<servlet>
+		<servlet-name>AddressBook</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<param-name>application</param-name>
+			<param-value>org.vaadin.jefferson.demo.addressbook.AddressBookApplication</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddressBook</servlet-name>
+		<url-pattern>/address-book/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Demo hub</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>

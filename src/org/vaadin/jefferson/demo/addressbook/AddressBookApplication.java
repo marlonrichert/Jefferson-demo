@@ -1,8 +1,9 @@
 package org.vaadin.jefferson.demo.addressbook;
 
-import org.vaadin.jefferson.demo.addressbook.content.AddressBookContent;
+import org.vaadin.jefferson.demo.addressbook.content.ContentRoot;
 import org.vaadin.jefferson.demo.addressbook.content.HelpWindow;
 import org.vaadin.jefferson.demo.addressbook.content.SharingOptions;
+import org.vaadin.jefferson.demo.addressbook.content.TreeView;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
@@ -19,7 +20,7 @@ public class AddressBookApplication extends Application {
 
     private PersonContainer dataSource = PersonContainer.createWithTestData();
 
-    private AddressBookContent content = new AddressBookContent(this);
+    private ContentRoot content = new ContentRoot(this);
 
     @Override
     public void init() {
@@ -104,11 +105,11 @@ public class AddressBookApplication extends Application {
 
     public void setItemId(Object itemId) {
         if (itemId != null) {
-            if (AddressBookContent.SHOW_ALL.equals(itemId)) {
+            if (TreeView.SHOW_ALL.equals(itemId)) {
                 // clear previous filters
                 getDataSource().removeAllContainerFilters();
                 content.showListView();
-            } else if (AddressBookContent.SEARCH.equals(itemId)) {
+            } else if (TreeView.SEARCH.equals(itemId)) {
                 content.showSearchView();
             } else if (itemId instanceof SearchFilter) {
                 search((SearchFilter) itemId, false);

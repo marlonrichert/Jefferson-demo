@@ -1,9 +1,11 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
-import org.vaadin.jefferson.Composite;
+import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonView;
 import org.vaadin.jefferson.content.SelectionView;
+import org.vaadin.jefferson.content.SimpleComposite;
+import org.vaadin.jefferson.content.TextView;
 import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
@@ -14,28 +16,23 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
-public class SearchView extends Composite<ComponentContainer> {
-    private View<AbstractTextField> searchTerm = new View<AbstractTextField>(
-            "Search term", AbstractTextField.class, new TextField());
+public class SearchView extends SimpleComposite {
+    private View<AbstractTextField> searchTerm = new TextView("Search term");
 
     private View<AbstractSelect> fieldToSearch = new FieldToSearch();
 
     private View<CheckBox> saveSearch = new SaveSearch();
 
-    private View<AbstractTextField> searchName = new View<AbstractTextField>(
-            "Search name", AbstractTextField.class, new TextField());
+    private View<AbstractTextField> searchName = new TextView("Search name");
 
     private View<Button> search = new ButtonView("Search", new SearchAction());
 
     private AddressBookApplication app;
 
     public SearchView(String name, final AddressBookApplication app) {
-        super(name, ComponentContainer.class, new Panel());
+        super(name);
         this.app = app;
 
         setChildren(searchTerm, fieldToSearch, saveSearch, searchName, search);
@@ -57,10 +54,9 @@ public class SearchView extends Composite<ComponentContainer> {
         }
 
         @Override
-        protected boolean setRendition(CheckBox rendition) {
-            if (!super.setRendition(rendition)) {
-                return false;
-            }
+        protected CheckBox accept(Presentation presentation) {
+            CheckBox rendition = super.accept(presentation);
+
             rendition.setValue(Boolean.TRUE);
             rendition.setImmediate(true);
 
@@ -71,7 +67,12 @@ public class SearchView extends Composite<ComponentContainer> {
                 }
             });
 
-            return true;
+            return rendition;
+        }
+
+        @Override
+        public CheckBox createFallback() {
+            return new CheckBox();
         }
     }
 
@@ -81,10 +82,9 @@ public class SearchView extends Composite<ComponentContainer> {
         }
 
         @Override
-        protected boolean setRendition(AbstractSelect rendition) {
-            if (!super.setRendition(rendition)) {
-                return false;
-            }
+        protected AbstractSelect accept(Presentation presentation) {
+            AbstractSelect rendition = super.accept(presentation);
+
             for (int i = 0; i < PersonContainer.NATURAL_COL_ORDER.length; i++) {
                 rendition.addItem(PersonContainer.NATURAL_COL_ORDER[i]);
                 rendition.setItemCaption(
@@ -94,7 +94,7 @@ public class SearchView extends Composite<ComponentContainer> {
             rendition.setValue("lastName");
             rendition.setNullSelectionAllowed(false);
 
-            return true;
+            return rendition;
         }
     }
 }
