@@ -5,8 +5,8 @@ import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.demo.addressbook.AddressBookApplication;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Tree;
 
 public final class TreeView extends View<Tree> {
@@ -41,10 +41,11 @@ public final class TreeView extends View<Tree> {
         rendition.setSelectable(true);
         rendition.setNullSelectionAllowed(false);
 
-        rendition.addListener(new ValueChangeListener() {
+        rendition.setImmediate(true);
+        rendition.addListener(new ItemClickListener() {
 
-            public void valueChange(ValueChangeEvent event) {
-                app.setItemId(event.getProperty().getValue());
+            public void itemClick(ItemClickEvent event) {
+                app.setItemId(event.getItemId());
             }
         });
 
