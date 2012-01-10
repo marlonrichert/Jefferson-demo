@@ -36,6 +36,14 @@ public class ContentRoot extends SimpleComposite {
                 main);
     }
 
+    protected void showListView() {
+        main.setContentView(list);
+    }
+
+    protected void showSearchView() {
+        main.setContentView(search);
+    }
+
     protected PersonContainer getDataSource() {
         return dataSource;
     }
@@ -82,13 +90,5 @@ public class ContentRoot extends SimpleComposite {
             return;
         }
         tree.addSearch(searchFilter);
-    }
-
-    protected void showListView() {
-        main.setContentView(list);
-    }
-
-    protected void showSearchView() {
-        main.setContentView(search);
     }
 }
