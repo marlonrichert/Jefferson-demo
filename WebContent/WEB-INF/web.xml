@@ -13,7 +13,7 @@
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
 		<init-param>
 			<param-name>application</param-name>
-			<param-value>org.vaadin.jefferson.demo.DemoApplication</param-value>
+			<param-value>org.vaadin.jefferson.demo.DemoHub</param-value>
 		</init-param>
 	</servlet>
 	<servlet>
@@ -24,6 +24,18 @@
 			<param-value>org.vaadin.jefferson.demo.addressbook.AddressBookLauncher</param-value>
 		</init-param>
 	</servlet>
+        <servlet>
+                <servlet-name>SimpleAddressBook</servlet-name>
+                <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+                <init-param>
+                        <param-name>application</param-name>
+                        <param-value>org.vaadin.jefferson.demo.simpleaddressbook.SimpleAddressBook</param-value>
+                </init-param>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>SimpleAddressBook</servlet-name>
+                <url-pattern>/simple-address-book/*</url-pattern>
+        </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AddressBook</servlet-name>
 		<url-pattern>/address-book/*</url-pattern>

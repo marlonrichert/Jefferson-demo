@@ -8,32 +8,25 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
 public class ContentRoot extends SimpleComposite {
+    private final SearchView search = new SearchView(this);
     private final TreeView tree;
     private final MainView main;
     private final ListView list;
-    private final SearchView search;
+    private PersonForm personForm;
 
     private PersonContainer dataSource;
-    private PersonForm personForm;
 
     public ContentRoot(PersonContainer dataSource) {
         super("Address book");
         this.dataSource = dataSource;
 
-        search = new SearchView(this);
-
-        personForm = new PersonForm(this);
-
-        tree = new TreeView(this);
-        list = new ListView(
-                new PersonList(this),
-                personForm);
-
-        main = new MainView(tree, list);
-
         setChildren(
                 new Toolbar(this),
-                main);
+                main = new MainView(
+                        tree = new TreeView(this),
+                        list = new ListView(
+                                new PersonList(this),
+                                personForm = new PersonForm(this))));
     }
 
     protected void showListView() {
