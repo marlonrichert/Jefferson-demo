@@ -24,7 +24,7 @@ public class SimpleAddressBook extends SimpleComposite {
     static final String FIRST_NAME = "First Name";
     static final String LAST_NAME = "Last Name";
 
-    private IndexedContainer data = createDummyData();
+    private IndexedContainer data = new IndexedContainer();
 
     private ContactEditor contactEditor = new ContactEditor();
     private ContactList contactList = new ContactList(
@@ -39,16 +39,15 @@ public class SimpleAddressBook extends SimpleComposite {
                 new SimpleComposite(NAVIGATION,
                         contactList,
                         new SimpleComposite(TOOLBAR,
-                                new ButtonView(ADD_CONTACT,
-                                        new ContactAddHandler()),
+                                new ButtonView(
+                                        ADD_CONTACT, new ContactAddHandler()),
                                 contactRemove,
-                                new Filter(FIRST_NAME, data),
                                 new Filter(LAST_NAME, data),
+                                new Filter(FIRST_NAME, data),
                                 new Filter(COMPANY, data))),
                 contactEditor);
-    }
 
-    private static IndexedContainer createDummyData() {
+        // Create dummy data by randomly combining first and last names
         String[] fields = {
                 FIRST_NAME, LAST_NAME, COMPANY, "Mobile Phone", "Work Phone",
                 "Home Phone", "Work Email", "Home Email", "Street", "Zip",
@@ -63,23 +62,17 @@ public class SimpleAddressBook extends SimpleComposite {
                 "Verne", "Scott", "Allison", "Gates", "Rowling", "Barks",
                 "Ross", "Schneider", "Tate",
         };
-
-        IndexedContainer container = new IndexedContainer();
         for (String p : fields) {
-            container.addContainerProperty(p, String.class, "");
+            data.addContainerProperty(p, String.class, "");
         }
-
-        // Create dummy data by randomly combining first and last names
         Random random = new Random();
         for (int i = 0; i < 1000; i++) {
-            Object id = container.addItem();
-            container.getContainerProperty(id, FIRST_NAME).setValue(
+            Object id = data.addItem();
+            data.getContainerProperty(id, FIRST_NAME).setValue(
                     firstNames[random.nextInt(firstNames.length)]);
-            container.getContainerProperty(id, LAST_NAME).setValue(
+            data.getContainerProperty(id, LAST_NAME).setValue(
                     lastNames[random.nextInt(lastNames.length)]);
         }
-
-        return container;
     }
 
     private class ContactListHandler implements Property.ValueChangeListener {
@@ -89,26 +82,6 @@ public class SimpleAddressBook extends SimpleComposite {
             contactEditor.getRendition().setItemDataSource(
                     id == null ? null : table.getItem(id));
             contactRemove.getRendition().setEnabled(id != null);
-        }
-    }
-
-    private final class ContactAddHandler implements
-            Button.ClickListener {
-        public void buttonClick(ClickEvent event) {
-            Table table = contactList.getRendition();
-
-            // Add new contact "John Doe" as the first item
-            Object id = ((IndexedContainer) table
-                    .getContainerDataSource()).addItemAt(0);
-            table.getItem(id).getItemProperty(SimpleAddressBook.FIRST_NAME)
-                    .setValue("John");
-            table.getItem(id).getItemProperty(SimpleAddressBook.LAST_NAME)
-                    .setValue("Doe");
-
-            // Select the newly added item and scroll to the
-            // item
-            table.setValue(id);
-            table.setCurrentPageFirstItemId(id);
         }
     }
 
@@ -130,6 +103,26 @@ public class SimpleAddressBook extends SimpleComposite {
             Table table = contactList.getRendition();
             table.removeItem(table.getValue());
             table.select(null);
+        }
+    }
+
+    private final class ContactAddHandler
+            implements Button.ClickListener {
+        public void buttonClick(ClickEvent event) {
+            Table table = contactList.getRendition();
+
+            // Add new contact "John Doe" as the first item
+            Object id = ((IndexedContainer) table
+                    .getContainerDataSource()).addItemAt(0);
+            table.getItem(id).getItemProperty(SimpleAddressBook.FIRST_NAME)
+                    .setValue("John");
+            table.getItem(id).getItemProperty(SimpleAddressBook.LAST_NAME)
+                    .setValue("Doe");
+
+            // Select the newly added item and scroll to the
+            // item
+            table.setValue(id);
+            table.setCurrentPageFirstItemId(id);
         }
     }
 }

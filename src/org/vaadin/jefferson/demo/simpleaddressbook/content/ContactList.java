@@ -26,10 +26,11 @@ public final class ContactList extends View<Table> {
     protected Table accept(Presentation p) {
         final Table rendition = super.accept(p);
         rendition.setContainerDataSource(data);
-        rendition.setVisibleColumns(
-                new String[] { SimpleAddressBook.LAST_NAME,
-                        SimpleAddressBook.FIRST_NAME,
-                        SimpleAddressBook.COMPANY });
+        rendition.setVisibleColumns(new String[] {
+                SimpleAddressBook.LAST_NAME,
+                SimpleAddressBook.FIRST_NAME,
+                SimpleAddressBook.COMPANY,
+        });
         rendition.setSelectable(true);
         rendition.setImmediate(true);
 

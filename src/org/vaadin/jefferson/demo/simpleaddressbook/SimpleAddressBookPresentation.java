@@ -65,7 +65,7 @@ public class SimpleAddressBookPresentation extends Presentation {
         Table rendition = view.getRendition();
         rendition.setSizeFull();
 
-        expand(view);
+        expand(rendition);
     }
 
     void style(Filter view) {
@@ -73,14 +73,14 @@ public class SimpleAddressBookPresentation extends Presentation {
         rendition.setWidth("100%");
         rendition.setInputPrompt(view.getName());
 
-        expand(view);
+        expand(rendition);
     }
 
-    private void expand(View<?> view) {
-        ComponentContainer parentRendition = view.getParent().getRendition();
+    private void expand(Component rendition) {
+        Component parentRendition = rendition.getParent();
         if (parentRendition instanceof AbstractOrderedLayout) {
             ((AbstractOrderedLayout) parentRendition).setExpandRatio(
-                    view.getRendition(), 1);
+                    rendition, 1);
         }
     }
 
