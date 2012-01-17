@@ -1,4 +1,4 @@
-package org.vaadin.jefferson.demo.simpleaddressbook;
+package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.content.TextView;
@@ -8,7 +8,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.AbstractTextField;
 
-class Filter extends TextView {
+public class Filter extends TextView {
     private IndexedContainer data;
 
     public Filter(String name, IndexedContainer data) {

@@ -7,7 +7,7 @@ import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
-public class ContentRoot extends SimpleComposite {
+public class AddressBook extends SimpleComposite {
     private final SearchView search = new SearchView(this);
     private final TreeView tree;
     private final MainView main;
@@ -16,7 +16,7 @@ public class ContentRoot extends SimpleComposite {
 
     private PersonContainer dataSource;
 
-    public ContentRoot(PersonContainer dataSource) {
+    public AddressBook(PersonContainer dataSource) {
         super("Address book");
         this.dataSource = dataSource;
 

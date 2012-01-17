@@ -21,7 +21,7 @@
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
 		<init-param>
 			<param-name>application</param-name>
-			<param-value>org.vaadin.jefferson.demo.addressbook.AddressBookLauncher</param-value>
+			<param-value>org.vaadin.jefferson.demo.addressbook.AddressBookDemo</param-value>
 		</init-param>
 	</servlet>
         <servlet>
@@ -29,7 +29,7 @@
                 <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
                 <init-param>
                         <param-name>application</param-name>
-                        <param-value>org.vaadin.jefferson.demo.simpleaddressbook.SimpleAddressBook</param-value>
+                        <param-value>org.vaadin.jefferson.demo.simpleaddressbook.SimpleAddressBookDemo</param-value>
                 </init-param>
         </servlet>
         <servlet-mapping>

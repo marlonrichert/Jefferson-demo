@@ -1,13 +1,13 @@
 package org.vaadin.jefferson.demo.addressbook;
 
-import org.vaadin.jefferson.demo.addressbook.content.ContentRoot;
+import org.vaadin.jefferson.demo.addressbook.content.AddressBook;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
-public class AddressBookLauncher extends Application {
+public class AddressBookDemo extends Application {
     private PersonContainer dataSource = PersonContainer.createWithTestData();
 
     @Override
@@ -18,6 +18,6 @@ public class AddressBookLauncher extends Application {
 
         getMainWindow().setContent(
                 new AddressBookPresentation().visit(
-                        new ContentRoot(dataSource)));
+                        new AddressBook(dataSource)));
     }
 }

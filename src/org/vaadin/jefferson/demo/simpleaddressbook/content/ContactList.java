@@ -1,4 +1,4 @@
-package org.vaadin.jefferson.demo.simpleaddressbook;
+package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
@@ -7,9 +7,8 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Table;
 
-final class ContactList extends View<Table> {
+public final class ContactList extends View<Table> {
     private Container data;
-    private ContactEditor editor;
     private ValueChangeListener valueChangeListener;
 
     ContactList(Container data, ValueChangeListener valueChangeListener) {
@@ -28,8 +27,9 @@ final class ContactList extends View<Table> {
         final Table rendition = super.accept(p);
         rendition.setContainerDataSource(data);
         rendition.setVisibleColumns(
-                new String[] { ContentRoot.LAST_NAME, ContentRoot.FIRST_NAME,
-                        ContentRoot.COMPANY });
+                new String[] { SimpleAddressBook.LAST_NAME,
+                        SimpleAddressBook.FIRST_NAME,
+                        SimpleAddressBook.COMPANY });
         rendition.setSelectable(true);
         rendition.setImmediate(true);
 

@@ -12,9 +12,9 @@ public final class TreeView extends View<Tree> {
     public static final Object SHOW_ALL = "Show all";
     public static final Object SEARCH = "Search";
 
-    private ContentRoot root;
+    private AddressBook root;
 
-    TreeView(ContentRoot root) {
+    TreeView(AddressBook root) {
         super("Tree", Tree.class);
         this.root = root;
     }

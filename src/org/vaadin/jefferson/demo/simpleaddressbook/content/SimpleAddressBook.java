@@ -1,4 +1,4 @@
-package org.vaadin.jefferson.demo.simpleaddressbook;
+package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
 import java.util.Random;
 
@@ -14,7 +14,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table;
 
-public class ContentRoot extends SimpleComposite {
+public class SimpleAddressBook extends SimpleComposite {
+    public static final String ADD_CONTACT = "Add contact";
+    public static final String REMOVE_CONTACT = "Remove contact";
+    public static final String NAVIGATION = "Navigation";
+    public static final String TOOLBAR = "Toolbar";
+
     static final String COMPANY = "Company";
     static final String FIRST_NAME = "First Name";
     static final String LAST_NAME = "Last Name";
@@ -25,19 +30,21 @@ public class ContentRoot extends SimpleComposite {
     private ContactList contactList = new ContactList(
             data, new ContactListHandler());
     private ButtonView contactRemove = new ContactRemove(
-            "Remove contact", new ContactRemoveHandler());
+            REMOVE_CONTACT, new ContactRemoveHandler());
 
-    public ContentRoot() {
+    public SimpleAddressBook() {
         super("Content root");
 
-        setChildren(new SimpleComposite("Navigation",
-                contactList,
-                new SimpleComposite("Toolbar",
-                        new ButtonView("Add contact", new ContactAddHandler()),
-                        contactRemove,
-                        new Filter(FIRST_NAME, data),
-                        new Filter(LAST_NAME, data),
-                        new Filter(COMPANY, data))),
+        setChildren(
+                new SimpleComposite(NAVIGATION,
+                        contactList,
+                        new SimpleComposite(TOOLBAR,
+                                new ButtonView(ADD_CONTACT,
+                                        new ContactAddHandler()),
+                                contactRemove,
+                                new Filter(FIRST_NAME, data),
+                                new Filter(LAST_NAME, data),
+                                new Filter(COMPANY, data))),
                 contactEditor);
     }
 
@@ -93,9 +100,9 @@ public class ContentRoot extends SimpleComposite {
             // Add new contact "John Doe" as the first item
             Object id = ((IndexedContainer) table
                     .getContainerDataSource()).addItemAt(0);
-            table.getItem(id).getItemProperty(ContentRoot.FIRST_NAME)
+            table.getItem(id).getItemProperty(SimpleAddressBook.FIRST_NAME)
                     .setValue("John");
-            table.getItem(id).getItemProperty(ContentRoot.LAST_NAME)
+            table.getItem(id).getItemProperty(SimpleAddressBook.LAST_NAME)
                     .setValue("Doe");
 
             // Select the newly added item and scroll to the
@@ -113,7 +120,7 @@ public class ContentRoot extends SimpleComposite {
         @Override
         protected Button accept(Presentation presentation) {
             Button rendition = super.accept(presentation);
-            rendition.setVisible(false);
+            rendition.setEnabled(false);
             return rendition;
         }
     }
