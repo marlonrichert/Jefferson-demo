@@ -1,42 +1,33 @@
 package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
-import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.content.TextControl;
 
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.ui.AbstractTextField;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 
 public class Filter extends TextControl {
-    private IndexedContainer data;
-
     public Filter(String name, IndexedContainer data) {
         super(name);
-        this.data = data;
+        setListener(new TextChangeHandler(name, data));
     }
 
-    @Override
-    protected AbstractTextField accept(Presentation p) {
-        final AbstractTextField rendition = super.accept(p);
-        rendition.setImmediate(true);
+    private final static class TextChangeHandler implements TextChangeListener {
+        private final String name;
+        private final IndexedContainer data;
 
-        rendition.addListener(new Property.ValueChangeListener() {
-            public void valueChange(ValueChangeEvent event) {
-                String name = getName();
+        private TextChangeHandler(String name, IndexedContainer data) {
+            this.name = name;
+            this.data = data;
+        }
 
-                data.removeContainerFilters(name);
+        public void textChange(TextChangeEvent event) {
+            data.removeContainerFilters(name);
 
-                String value = rendition.toString();
-                if (value.length() > 0 && !name.equals(value)) {
-                    data.addContainerFilter(
-                            name, value, true, false);
-                }
-
-                rendition.getWindow().showNotification(
-                        data.size() + " matches found");
+            String text = event.getText();
+            if (text.length() > 0 && !name.equals(text)) {
+                data.addContainerFilter(name, text, true, false);
             }
-        });
-        return rendition;
+        }
     }
 }

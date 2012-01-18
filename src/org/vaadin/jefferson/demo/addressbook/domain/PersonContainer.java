@@ -33,10 +33,10 @@ public class PersonContainer extends BeanItemContainer<Person> {
         final String[] lnames = { "Smith", "Gordon", "Simpson", "Brown",
                 "Clavel", "Simons", "Verne", "Scott", "Allison", "Gates",
                 "Rowling", "Barks", "Ross", "Schneider", "Tate" };
-        final String cities[] = { "Amsterdam", "Berlin", "Helsinki",
+        final String[] cities = { "Amsterdam", "Berlin", "Helsinki",
                 "Hong Kong", "London", "Luxemburg", "New York", "Oslo",
                 "Paris", "Rome", "Stockholm", "Tokyo", "Turku" };
-        final String streets[] = { "4215 Blandit Av.", "452-8121 Sem Ave",
+        final String[] streets = { "4215 Blandit Av.", "452-8121 Sem Ave",
                 "279-4475 Tellus Road", "4062 Libero. Av.", "7081 Pede. Ave",
                 "6800 Aliquet St.", "P.O. Box 298, 9401 Mauris St.",
                 "161-7279 Augue Ave", "P.O. Box 496, 1390 Sagittis. Rd.",
