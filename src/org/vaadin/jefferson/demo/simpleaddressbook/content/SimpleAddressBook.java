@@ -29,18 +29,21 @@ public class SimpleAddressBook extends SimpleComposite {
     private ContactEditor contactEditor = new ContactEditor();
     private ContactList contactList = new ContactList(
             data, new ContactListHandler());
+    private ButtonView contactAdd = new ButtonView(
+            ADD_CONTACT, new ContactAddHandler());
     private ButtonView contactRemove = new ContactRemove(
             REMOVE_CONTACT, new ContactRemoveHandler());
+    private SimpleComposite nav = new SimpleComposite(NAVIGATION);
+    private SimpleComposite toolbar = new SimpleComposite(TOOLBAR);
 
     public SimpleAddressBook() {
         super("Content root");
 
         setChildren(
-                new SimpleComposite(NAVIGATION,
+                nav.setChildren(
                         contactList,
-                        new SimpleComposite(TOOLBAR,
-                                new ButtonView(
-                                        ADD_CONTACT, new ContactAddHandler()),
+                        toolbar.setChildren(
+                                contactAdd,
                                 contactRemove,
                                 new Filter(LAST_NAME, data),
                                 new Filter(FIRST_NAME, data),
