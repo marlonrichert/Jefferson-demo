@@ -3,7 +3,7 @@ package org.vaadin.jefferson.demo.simpleaddressbook.content;
 import java.util.Random;
 
 import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.content.ButtonView;
+import org.vaadin.jefferson.content.ButtonControl;
 import org.vaadin.jefferson.content.SimpleComposite;
 
 import com.vaadin.data.Property;
@@ -29,9 +29,9 @@ public class SimpleAddressBook extends SimpleComposite {
     private ContactEditor contactEditor = new ContactEditor();
     private ContactList contactList = new ContactList(
             data, new ContactListHandler());
-    private ButtonView contactAdd = new ButtonView(
+    private ButtonControl contactAdd = new ButtonControl(
             ADD_CONTACT, new ContactAddHandler());
-    private ButtonView contactRemove = new ContactRemove(
+    private ButtonControl contactRemove = new ContactRemove(
             REMOVE_CONTACT, new ContactRemoveHandler());
     private SimpleComposite nav = new SimpleComposite(NAVIGATION);
     private SimpleComposite toolbar = new SimpleComposite(TOOLBAR);
@@ -88,7 +88,7 @@ public class SimpleAddressBook extends SimpleComposite {
         }
     }
 
-    private final static class ContactRemove extends ButtonView {
+    private final static class ContactRemove extends ButtonControl {
         private ContactRemove(String name, ClickListener listener) {
             super(name, listener);
         }

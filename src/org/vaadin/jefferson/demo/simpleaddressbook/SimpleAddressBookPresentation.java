@@ -5,14 +5,13 @@ import java.util.Map;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.content.ButtonView;
+import org.vaadin.jefferson.content.ButtonControl;
 import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.ContactEditor;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.ContactList;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.Filter;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.SimpleAddressBook;
 
-import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -42,11 +41,11 @@ public class SimpleAddressBookPresentation extends Presentation {
         return new HorizontalSplitPanel();
     }
 
-    Component render(ButtonView view) {
+    Component render(ButtonControl view) {
         return new Button();
     }
 
-    void style(ButtonView view) {
+    void style(ButtonControl view) {
         Button rendition = view.getRendition();
         String name = view.getName();
         rendition.setCaption(captions.get(name));
@@ -74,14 +73,6 @@ public class SimpleAddressBookPresentation extends Presentation {
         rendition.setInputPrompt(view.getName());
 
         expand(rendition);
-    }
-
-    private void expand(Component rendition) {
-        Component parentRendition = rendition.getParent();
-        if (parentRendition instanceof AbstractOrderedLayout) {
-            ((AbstractOrderedLayout) parentRendition).setExpandRatio(
-                    rendition, 1);
-        }
     }
 
     Component render(SimpleComposite view) {

@@ -1,7 +1,7 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.content.ButtonView;
+import org.vaadin.jefferson.content.ButtonControl;
 import org.vaadin.jefferson.content.SimpleComposite;
 
 import com.vaadin.ui.Button;
@@ -19,26 +19,26 @@ public class Toolbar extends SimpleComposite {
     public static final String SEARCH = "Search";
     public static final String SHARE = "Share";
 
-    private View<Button> newContactButton = new ButtonView(ADD_CONTACT,
+    private View<Button> newContactButton = new ButtonControl(ADD_CONTACT,
             new ClickListener() {
                 public void buttonClick(ClickEvent event) {
                     root.addNewContact();
                 }
             });
-    private View<Button> searchButton = new ButtonView(SEARCH,
+    private View<Button> searchButton = new ButtonControl(SEARCH,
             new ClickListener() {
                 public void buttonClick(ClickEvent event) {
                     root.showSearchView();
                 }
             });
-    private View<Button> shareButton = new ButtonView(SHARE,
+    private View<Button> shareButton = new ButtonControl(SHARE,
             new ClickListener() {
 
                 public void buttonClick(ClickEvent event) {
                     showShareWindow();
                 }
             });
-    private View<Button> helpButton = new ButtonView(HELP,
+    private View<Button> helpButton = new ButtonControl(HELP,
             new ClickListener() {
                 public void buttonClick(ClickEvent event) {
                     showHelpWindow();

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.vaadin.jefferson.Composite;
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.content.ButtonView;
+import org.vaadin.jefferson.content.ButtonControl;
 import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.demo.addressbook.content.AddressBook;
 import org.vaadin.jefferson.demo.addressbook.content.ListView;
@@ -80,13 +80,13 @@ public class AddressBookPresentation extends Presentation {
         view.getRendition().setSizeFull();
     }
 
-    Component render(ButtonView view) {
+    Component render(ButtonControl view) {
         return view.getParent() instanceof Toolbar
                 ? new Button()
                 : new NativeButton();
     }
 
-    void style(ButtonView view) {
+    void style(ButtonControl view) {
         super.style(view);
         Button rendition = view.getRendition();
         rendition.setCaption(view.getName());

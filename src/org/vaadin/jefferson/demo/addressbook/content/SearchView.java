@@ -2,10 +2,10 @@ package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.content.ButtonView;
-import org.vaadin.jefferson.content.SelectionView;
+import org.vaadin.jefferson.content.ButtonControl;
+import org.vaadin.jefferson.content.SelectionControl;
 import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.content.TextView;
+import org.vaadin.jefferson.content.TextControl;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
@@ -18,16 +18,12 @@ import com.vaadin.ui.CheckBox;
 
 @SuppressWarnings("serial")
 public class SearchView extends SimpleComposite {
-    private View<AbstractTextField> searchTerm = new TextView("Search term");
-
+    private View<AbstractTextField> searchTerm = new TextControl("Search term");
     private View<AbstractSelect> fieldToSearch = new FieldToSearch();
-
     private View<CheckBox> saveSearch = new SaveSearch();
-
-    private View<AbstractTextField> searchName = new TextView("Search name");
-
-    private View<Button> search = new ButtonView("Search", new SearchAction());
-
+    private View<AbstractTextField> searchName = new TextControl("Search name");
+    private View<Button> search = new ButtonControl(
+            "Search", new SearchAction());
     private AddressBook root;
 
     public SearchView(AddressBook root) {
@@ -75,7 +71,7 @@ public class SearchView extends SimpleComposite {
         }
     }
 
-    private static class FieldToSearch extends SelectionView {
+    private static class FieldToSearch extends SelectionControl {
         private FieldToSearch() {
             super("Field to search");
         }
