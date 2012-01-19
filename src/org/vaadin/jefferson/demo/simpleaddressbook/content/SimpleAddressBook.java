@@ -45,9 +45,9 @@ public class SimpleAddressBook extends SimpleComposite {
                         toolbar.setChildren(
                                 contactAdd,
                                 contactRemove,
-                                new Filter(LAST_NAME, data),
-                                new Filter(FIRST_NAME, data),
-                                new Filter(COMPANY, data))),
+                                new FilterControl(LAST_NAME, data),
+                                new FilterControl(FIRST_NAME, data),
+                                new FilterControl(COMPANY, data))),
                 contactEditor);
 
         // Create dummy data by randomly combining first and last names

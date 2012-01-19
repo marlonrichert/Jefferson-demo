@@ -9,7 +9,7 @@ import org.vaadin.jefferson.content.ButtonControl;
 import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.ContactEditor;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.ContactList;
-import org.vaadin.jefferson.demo.simpleaddressbook.content.Filter;
+import org.vaadin.jefferson.demo.simpleaddressbook.content.FilterControl;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.SimpleAddressBook;
 
 import com.vaadin.ui.AbstractTextField;
@@ -67,7 +67,7 @@ public class SimpleAddressBookPresentation extends Presentation {
         expand(rendition);
     }
 
-    void style(Filter view) {
+    void style(FilterControl view) {
         AbstractTextField rendition = view.getRendition();
         rendition.setWidth("100%");
         rendition.setInputPrompt(view.getName());

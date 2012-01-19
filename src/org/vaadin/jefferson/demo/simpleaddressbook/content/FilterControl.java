@@ -6,8 +6,8 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 
-public class Filter extends TextControl {
-    public Filter(String name, IndexedContainer data) {
+public class FilterControl extends TextControl {
+    FilterControl(String name, IndexedContainer data) {
         super(name);
         setListener(new TextChangeHandler(name, data));
     }
