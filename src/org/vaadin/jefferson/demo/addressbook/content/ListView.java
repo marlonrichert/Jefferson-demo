@@ -2,11 +2,12 @@ package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.content.SimpleComposite;
+import org.vaadin.jefferson.demo.addressbook.domain.Person;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Table;
 
 public class ListView extends SimpleComposite {
     public PersonForm personForm;
@@ -24,11 +25,11 @@ public class ListView extends SimpleComposite {
     protected ComponentContainer accept(Presentation presentation) {
         ComponentContainer rendition = super.accept(presentation);
 
-        personList.getRendition().addListener(new ValueChangeListener() {
+        personList.setListener(new ValueChangeListener() {
 
             public void valueChange(ValueChangeEvent event) {
-                Table table = personList.getRendition();
-                personForm.setDataSource(table.getItem(table.getValue()));
+                personForm.setDataSource(
+                        new BeanItem<Person>(personList.getSelection()[0]));
             }
         });
 

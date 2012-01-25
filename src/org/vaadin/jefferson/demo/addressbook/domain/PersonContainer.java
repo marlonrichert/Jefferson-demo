@@ -10,7 +10,7 @@ public class PersonContainer extends BeanItemContainer<Person> {
     /**
      * Natural property order for Person bean. Used in tables and forms.
      */
-    public static final Object[] NATURAL_COL_ORDER = new Object[] {
+    public static final String[] NATURAL_COL_ORDER = new String[] {
             "firstName", "lastName", "email", "phoneNumber", "streetAddress",
             "postalCode", "city" };
 

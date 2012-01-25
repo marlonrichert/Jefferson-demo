@@ -1,23 +1,24 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
 import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.View;
+import org.vaadin.jefferson.content.SelectionControl;
 import org.vaadin.jefferson.demo.addressbook.domain.Person;
 import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 
 import com.vaadin.data.Container;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
 @SuppressWarnings("serial")
-public class PersonList extends View<Table> {
+public class PersonList extends SelectionControl<Person> {
     private Container dataSource;
 
     public PersonList(AddressBook root) {
-        super("Person list", Table.class);
+        super("Person list", Person.class);
         dataSource = root.getDataSource();
     }
 
@@ -27,20 +28,18 @@ public class PersonList extends View<Table> {
     }
 
     @Override
-    protected Table accept(Presentation presentation) {
-        Table rendition = super.accept(presentation);
+    protected AbstractSelect accept(Presentation presentation) {
+        AbstractSelect rendition = super.accept(presentation);
 
         rendition.setContainerDataSource(dataSource);
-
-        rendition.setVisibleColumns(PersonContainer.NATURAL_COL_ORDER);
-        rendition.setColumnHeaders(PersonContainer.COL_HEADERS_ENGLISH);
-
-        rendition.setSelectable(true);
-        rendition.setImmediate(true);
-
         rendition.setNullSelectionAllowed(false);
 
-        rendition.addGeneratedColumn("email", new EmailColumn());
+        if (rendition instanceof Table) {
+            Table table = (Table) rendition;
+            table.setVisibleColumns(PersonContainer.NATURAL_COL_ORDER);
+            table.setColumnHeaders(PersonContainer.COL_HEADERS_ENGLISH);
+            table.addGeneratedColumn("email", new EmailColumn());
+        }
 
         return rendition;
     }

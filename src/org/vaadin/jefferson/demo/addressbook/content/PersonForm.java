@@ -161,7 +161,7 @@ public class PersonForm extends View<Form> implements ClickListener {
         newContactMode = false;
         Form form = getRendition();
         if (newDataSource != null) {
-            List<Object> orderedProperties = Arrays.asList(
+            List<String> orderedProperties = Arrays.asList(
                     PersonContainer.NATURAL_COL_ORDER);
             form.setItemDataSource(newDataSource, orderedProperties);
 

@@ -1,20 +1,16 @@
 package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
-import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.View;
+import org.vaadin.jefferson.content.SelectionControl;
+import org.vaadin.jefferson.demo.simpleaddressbook.domain.Contact;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Container.Filter;
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Table;
 
-public final class ContactList extends View<Table> {
-    private Container data;
-    private ValueChangeListener valueChangeListener;
-
-    ContactList(Container data, ValueChangeListener valueChangeListener) {
-        super("Contact list", Table.class);
-        this.data = data;
-        this.valueChangeListener = valueChangeListener;
+public final class ContactList extends SelectionControl<Contact> {
+    public ContactList() {
+        super("Contact list", Contact.class);
     }
 
     @Override
@@ -22,19 +18,34 @@ public final class ContactList extends View<Table> {
         return new Table();
     }
 
-    @Override
-    protected Table accept(Presentation p) {
-        final Table rendition = super.accept(p);
-        rendition.setContainerDataSource(data);
-        rendition.setVisibleColumns(new String[] {
-                SimpleAddressBook.LAST_NAME,
-                SimpleAddressBook.FIRST_NAME,
-                SimpleAddressBook.COMPANY,
-        });
-        rendition.setSelectable(true);
-        rendition.setImmediate(true);
+    public void removeContact(Contact contact) {
+        getRendition().getContainerDataSource().removeItem(contact);
+    }
 
-        rendition.addListener(valueChangeListener);
-        return rendition;
+    public void addNewContact() {
+        AbstractSelect rendition = getRendition();
+
+        Contact contact = new Contact();
+
+        @SuppressWarnings("unchecked")
+        BeanItemContainer<Contact> container = (BeanItemContainer<Contact>)
+                rendition.getContainerDataSource();
+        container.addItemAt(0, contact);
+
+        rendition.select(contact);
+        if (rendition instanceof Table) {
+            ((Table) rendition).setCurrentPageFirstItemId(contact);
+        }
+    }
+
+    public void filter(Object propertyId, Filter filter) {
+        @SuppressWarnings("unchecked")
+        BeanItemContainer<Contact> container = (BeanItemContainer<Contact>)
+                getRendition().getContainerDataSource();
+
+        container.removeContainerFilters(propertyId);
+        if (filter != null) {
+            container.addContainerFilter(filter);
+        }
     }
 }

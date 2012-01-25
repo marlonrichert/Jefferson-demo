@@ -1,13 +1,20 @@
 package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
-import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.View;
+import java.util.Arrays;
 
+import org.vaadin.jefferson.Control;
+import org.vaadin.jefferson.Presentation;
+import org.vaadin.jefferson.demo.simpleaddressbook.domain.Contact;
+
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Form;
 
-public final class ContactEditor extends View<Form> {
+public final class ContactEditor extends Control<Form, ValueChangeListener> {
+    private BeanItem<Contact> contact;
+
     ContactEditor() {
-        super("Contact editor", Form.class);
+        super("Contact editor", Form.class, ValueChangeListener.class);
     }
 
     @Override
@@ -17,8 +24,21 @@ public final class ContactEditor extends View<Form> {
 
     @Override
     protected Form accept(Presentation p) {
-        Form rendition = super.accept(p);
-        rendition.setImmediate(true);
-        return rendition;
+        setContact(contact);
+        return super.accept(p);
+    }
+
+    public void setContact(BeanItem<Contact> contact) {
+        Form rendition = getRendition();
+        if (rendition != null) {
+            rendition.setItemDataSource(
+                    contact,
+                    Arrays.asList(Contact.PROPERTIES));
+        }
+        this.contact = contact;
+    }
+
+    public BeanItem<Contact> getContact() {
+        return contact;
     }
 }

@@ -1,5 +1,6 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
+import org.vaadin.jefferson.Control;
 import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonControl;
@@ -10,7 +11,6 @@ import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
 import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
 
 import com.vaadin.ui.AbstractSelect;
-import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -18,10 +18,10 @@ import com.vaadin.ui.CheckBox;
 
 @SuppressWarnings("serial")
 public class SearchView extends SimpleComposite {
-    private View<AbstractTextField> searchTerm = new TextControl("Search term");
-    private View<AbstractSelect> fieldToSearch = new FieldToSearch();
-    private View<CheckBox> saveSearch = new SaveSearch();
-    private View<AbstractTextField> searchName = new TextControl("Search name");
+    private TextControl searchTerm = new TextControl("Search term");
+    private FieldToSearch fieldToSearch = new FieldToSearch();
+    private SaveSearch saveSearch = new SaveSearch();
+    private SearchName searchName = new SearchName();
     private View<Button> search = new ButtonControl(
             "Search", new SearchAction());
     private AddressBook root;
@@ -36,32 +36,28 @@ public class SearchView extends SimpleComposite {
     private class SearchAction implements Button.ClickListener {
         public void buttonClick(ClickEvent event) {
             root.search(new SearchFilter(
-                    fieldToSearch.getRendition().getValue(),
-                    searchTerm.getRendition().getValue().toString(),
-                    searchName.getRendition().getValue().toString()),
-                    saveSearch.getRendition().booleanValue());
+                    fieldToSearch.getSelection()[0],
+                    searchTerm.getText(),
+                    searchName.getText()),
+                    saveSearch.isChecked());
         }
     }
 
-    private class SaveSearch extends View<CheckBox> {
+    private class SaveSearch extends Control<CheckBox, ClickListener> {
         private SaveSearch() {
-            super("Save search", CheckBox.class);
+            super("Save search", CheckBox.class, ClickListener.class);
+
+            setListener(new ClickListener() {
+                public void buttonClick(ClickEvent event) {
+                    searchName.setVisible(getRendition().booleanValue());
+                }
+            });
         }
 
         @Override
         protected CheckBox accept(Presentation presentation) {
             CheckBox rendition = super.accept(presentation);
-
             rendition.setValue(Boolean.TRUE);
-            rendition.setImmediate(true);
-
-            rendition.addListener(new ClickListener() {
-                public void buttonClick(ClickEvent event) {
-                    searchName.getRendition().setVisible(
-                            getRendition().booleanValue());
-                }
-            });
-
             return rendition;
         }
 
@@ -69,11 +65,20 @@ public class SearchView extends SimpleComposite {
         public CheckBox createFallback() {
             return new CheckBox();
         }
+
+        public boolean isChecked() {
+            CheckBox rendition = getRendition();
+            if (rendition == null) {
+                return false;
+            }
+            return Boolean.valueOf("" + rendition.getValue()).booleanValue();
+        }
     }
 
-    private static class FieldToSearch extends SelectionControl {
+    private static class FieldToSearch
+            extends SelectionControl<String> {
         private FieldToSearch() {
-            super("Field to search");
+            super("Field to search", String.class);
         }
 
         @Override

@@ -20,6 +20,7 @@ import org.vaadin.jefferson.demo.addressbook.content.TreeView;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.AbstractOrderedLayout;
+import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.AbstractSplitPanel;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -54,7 +55,7 @@ public class AddressBookPresentation extends Presentation {
     @Override
     protected void style(View<?> view) {
         super.style(view);
-        Component rendition = view.getRendition();
+        Component rendition = getRendition(view);
 
         if (rendition instanceof Embedded) {
             ((Embedded) rendition).setSource(new ThemeResource(icons.get(view
@@ -63,7 +64,7 @@ public class AddressBookPresentation extends Presentation {
 
         rendition.setCaption(null);
 
-        Component parentRendition = view.getParent().getRendition();
+        Component parentRendition = getRendition(view.getParent());
         if (parentRendition instanceof AbstractOrderedLayout) {
             AbstractOrderedLayout layout = (AbstractOrderedLayout) parentRendition;
             layout.setComponentAlignment(rendition, Alignment.MIDDLE_RIGHT);
@@ -71,24 +72,24 @@ public class AddressBookPresentation extends Presentation {
         }
     }
 
-    Component render(AddressBook view) {
-        return new VerticalLayout();
+    void render(AddressBook view) {
+        setRendition(view, new VerticalLayout());
     }
 
     void style(AddressBook view) {
         super.style(view);
-        view.getRendition().setSizeFull();
+        getRendition(view).setSizeFull();
     }
 
-    Component render(ButtonControl view) {
-        return view.getParent() instanceof Toolbar
+    void render(ButtonControl view) {
+        setRendition(view, view.getParent() instanceof Toolbar
                 ? new Button()
-                : new NativeButton();
+                : new NativeButton());
     }
 
     void style(ButtonControl view) {
         super.style(view);
-        Button rendition = view.getRendition();
+        Button rendition = getRendition(view);
         rendition.setCaption(view.getName());
 
         Composite<?> parent = view.getParent();
@@ -98,20 +99,20 @@ public class AddressBookPresentation extends Presentation {
             rendition.addStyleName(ChameleonTheme.BUTTON_BORDERLESS);
         }
 
-        Component parentRendition = parent.getRendition();
+        Component parentRendition = getRendition(parent);
         if (parentRendition instanceof AbstractOrderedLayout) {
             ((AbstractOrderedLayout) parentRendition).setExpandRatio(
                     rendition, 0);
         }
     }
 
-    Component render(ListView view) {
-        return new VerticalSplitPanel();
+    void render(ListView view) {
+        setRendition(view, new VerticalSplitPanel());
     }
 
     void style(ListView view) {
         super.style(view);
-        ComponentContainer rendition = view.getRendition();
+        ComponentContainer rendition = getRendition(view);
 
         if (rendition instanceof AbstractSplitPanel) {
             ((AbstractSplitPanel) rendition).setSplitPosition(40);
@@ -120,13 +121,13 @@ public class AddressBookPresentation extends Presentation {
         rendition.setSizeFull();
     }
 
-    Component render(MainView view) {
-        return new HorizontalSplitPanel();
+    void render(MainView view) {
+        setRendition(view, new HorizontalSplitPanel());
     }
 
     void style(MainView view) {
         super.style(view);
-        Component rendition = view.getRendition();
+        Component rendition = getRendition(view);
 
         if (rendition instanceof AbstractSplitPanel) {
             ((AbstractSplitPanel) rendition).setSplitPosition(
@@ -135,21 +136,21 @@ public class AddressBookPresentation extends Presentation {
 
         rendition.setSizeFull();
 
-        Component parentRendition = view.getParent().getRendition();
+        Component parentRendition = getRendition(view.getParent());
         if (parentRendition instanceof AbstractOrderedLayout) {
             ((AbstractOrderedLayout) parentRendition).setExpandRatio(
                     rendition, 1);
         }
     }
 
-    Component render(PersonForm view) {
+    void render(PersonForm view) {
         Form rendition = new Form();
         rendition.setFooter(new HorizontalLayout());
-        return rendition;
+        setRendition(view, rendition);
     }
 
     void style(PersonForm view) {
-        Form rendition = view.getRendition();
+        Form rendition = getRendition(view);
         Layout footer = rendition.getFooter();
         if (footer instanceof AbstractOrderedLayout) {
             ((HorizontalLayout) footer).setSpacing(true);
@@ -158,41 +159,45 @@ public class AddressBookPresentation extends Presentation {
 
     void style(PersonList view) {
         super.style(view);
-        Table rendition = view.getRendition();
+        AbstractSelect rendition = getRendition(view);
 
         rendition.addStyleName(ChameleonTheme.TABLE_BORDERLESS);
         rendition.addStyleName(ChameleonTheme.TABLE_STRIPED);
         rendition.addStyleName("strong");
 
         rendition.setSizeFull();
-        rendition.setColumnCollapsingAllowed(true);
-        rendition.setColumnReorderingAllowed(true);
+
+        if (rendition instanceof Table) {
+            Table table = (Table) rendition;
+            table.setColumnCollapsingAllowed(true);
+            table.setColumnReorderingAllowed(true);
+        }
     }
 
-    Component render(SearchView view) {
+    void render(SearchView view) {
         Panel rendition = new Panel();
         rendition.setContent(new FormLayout());
-        return rendition;
+        setRendition(view, rendition);
     }
 
     void style(SearchView view) {
         super.style(view);
-        ComponentContainer rendition = view.getRendition();
+        ComponentContainer rendition = getRendition(view);
         rendition.setSizeFull();
 
         rendition.setCaption(view.getName());
         for (View<?> child : view.getChildren()) {
-            child.getRendition().setCaption(child.getName());
+            getRendition(child).setCaption(child.getName());
         }
     }
 
-    Component render(SimpleComposite view) {
-        return new CssLayout();
+    void render(SimpleComposite view) {
+        setRendition(view, new CssLayout());
     }
 
     void style(SimpleComposite view) {
         super.style(view);
-        ComponentContainer rendition = view.getRendition();
+        ComponentContainer rendition = getRendition(view);
 
         if (rendition instanceof AbstractOrderedLayout) {
             AbstractOrderedLayout layout = (AbstractOrderedLayout) rendition;
@@ -205,7 +210,7 @@ public class AddressBookPresentation extends Presentation {
 
     void style(TreeView view) {
         super.style(view);
-        Tree rendition = view.getRendition();
+        Tree rendition = getRendition(view);
         rendition.addStyleName(
                 ChameleonTheme.COMPOUND_LAYOUT_SIDEBAR_MENU);
         rendition.setSizeFull();
