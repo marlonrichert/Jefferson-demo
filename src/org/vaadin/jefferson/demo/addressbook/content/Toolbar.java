@@ -46,9 +46,9 @@ public class Toolbar extends SimpleComposite {
             });
 
     private View<Embedded> logo = new Logo(LOGO, Embedded.class);
-    private AddressBook root;
+    private AddressBookView root;
 
-    public Toolbar(AddressBook root) {
+    public Toolbar(AddressBookView root) {
         super("Toolbar");
         this.root = root;
 

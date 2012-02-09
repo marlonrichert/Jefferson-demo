@@ -12,7 +12,7 @@ public class ContactRemoveControl extends ButtonControl {
     public ContactList contactList;
 
     ContactRemoveControl(ContactList contactList) {
-        super(SimpleAddressBook.REMOVE_CONTACT);
+        super(SimpleAddressBookView.REMOVE_CONTACT);
         this.contactList = contactList;
         setListener(new ContactRemoveHandler());
     }

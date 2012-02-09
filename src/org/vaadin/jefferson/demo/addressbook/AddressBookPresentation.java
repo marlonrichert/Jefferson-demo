@@ -8,7 +8,7 @@ import org.vaadin.jefferson.Presentation;
 import org.vaadin.jefferson.View;
 import org.vaadin.jefferson.content.ButtonControl;
 import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.demo.addressbook.content.AddressBook;
+import org.vaadin.jefferson.demo.addressbook.content.AddressBookView;
 import org.vaadin.jefferson.demo.addressbook.content.ListView;
 import org.vaadin.jefferson.demo.addressbook.content.MainView;
 import org.vaadin.jefferson.demo.addressbook.content.PersonForm;
@@ -72,11 +72,11 @@ public class AddressBookPresentation extends Presentation {
         }
     }
 
-    void render(AddressBook view) {
+    void render(AddressBookView view) {
         setRendition(view, new VerticalLayout());
     }
 
-    void style(AddressBook view) {
+    void style(AddressBookView view) {
         super.style(view);
         getRendition(view).setSizeFull();
     }

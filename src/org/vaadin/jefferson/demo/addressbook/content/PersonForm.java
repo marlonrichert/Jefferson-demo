@@ -35,7 +35,7 @@ public class PersonForm extends View<Form> implements ClickListener {
     private Person newPerson = null;
     private PersonContainer dataSource;
 
-    public PersonForm(AddressBook root) {
+    public PersonForm(AddressBookView root) {
         super("Person form", Form.class);
         dataSource = root.getDataSource();
     }

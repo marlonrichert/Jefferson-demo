@@ -9,7 +9,7 @@ import org.vaadin.jefferson.content.SimpleComposite;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.ContactEditor;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.ContactList;
 import org.vaadin.jefferson.demo.simpleaddressbook.content.FilterControl;
-import org.vaadin.jefferson.demo.simpleaddressbook.content.SimpleAddressBook;
+import org.vaadin.jefferson.demo.simpleaddressbook.content.SimpleAddressBookView;
 import org.vaadin.jefferson.demo.simpleaddressbook.domain.Contact;
 
 import com.vaadin.ui.AbstractSelect;
@@ -27,14 +27,14 @@ public class SimpleAddressBookPresentation extends Presentation {
     private Map<String, String> captions = new HashMap<String, String>();
 
     public SimpleAddressBookPresentation() {
-        captions.put(SimpleAddressBook.ADD_CONTACT, "+");
-        captions.put(SimpleAddressBook.REMOVE_CONTACT, "-");
+        captions.put(SimpleAddressBookView.ADD_CONTACT, "+");
+        captions.put(SimpleAddressBookView.REMOVE_CONTACT, "-");
         captions.put(Contact.LAST_NAME, "Last name");
         captions.put(Contact.FIRST_NAME, "First name");
         captions.put(Contact.COMPANY, "Company");
     }
 
-    void render(SimpleAddressBook view) {
+    void render(SimpleAddressBookView view) {
         setRendition(view, new HorizontalSplitPanel());
     }
 
@@ -86,7 +86,7 @@ public class SimpleAddressBookPresentation extends Presentation {
 
     void render(SimpleComposite view) {
         setRendition(view,
-                SimpleAddressBook.TOOLBAR.equals(view.getName())
+                SimpleAddressBookView.TOOLBAR.equals(view.getName())
                         ? new HorizontalLayout()
                         : new VerticalLayout());
     }
@@ -94,9 +94,9 @@ public class SimpleAddressBookPresentation extends Presentation {
     void style(SimpleComposite view) {
         ComponentContainer rendition = getRendition(view);
         String name = view.getName();
-        if (SimpleAddressBook.NAVIGATION.equals(name)) {
+        if (SimpleAddressBookView.NAVIGATION.equals(name)) {
             rendition.setSizeFull();
-        } else if (SimpleAddressBook.TOOLBAR.equals(name)) {
+        } else if (SimpleAddressBookView.TOOLBAR.equals(name)) {
             rendition.setWidth("100%");
         }
     }

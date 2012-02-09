@@ -17,7 +17,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 public class PersonList extends SelectionControl<Person> {
     private Container dataSource;
 
-    public PersonList(AddressBook root) {
+    public PersonList(AddressBookView root) {
         super("Person list", Person.class);
         dataSource = root.getDataSource();
     }

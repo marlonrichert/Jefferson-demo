@@ -11,7 +11,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 
-public class SimpleAddressBook extends SimpleComposite {
+public class SimpleAddressBookView extends SimpleComposite {
     private static final int NR_OF_CONTACTS = 1000;
     public static final String ADD_CONTACT = "Add contact";
     public static final String REMOVE_CONTACT = "Remove contact";
@@ -27,7 +27,7 @@ public class SimpleAddressBook extends SimpleComposite {
     private SimpleComposite nav = new SimpleComposite(NAVIGATION);
     private SimpleComposite toolbar = new SimpleComposite(TOOLBAR);
 
-    public SimpleAddressBook() {
+    public SimpleAddressBookView() {
         super("Content root");
 
         setChildren(

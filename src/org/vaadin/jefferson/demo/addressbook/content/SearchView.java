@@ -24,9 +24,9 @@ public class SearchView extends SimpleComposite {
     private SearchName searchName = new SearchName();
     private View<Button> search = new ButtonControl(
             "Search", new SearchAction());
-    private AddressBook root;
+    private AddressBookView root;
 
-    public SearchView(AddressBook root) {
+    public SearchView(AddressBookView root) {
         super("Search contacts");
         this.root = root;
 
