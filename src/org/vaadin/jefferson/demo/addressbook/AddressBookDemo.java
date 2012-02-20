@@ -19,7 +19,7 @@ public class AddressBookDemo extends Application {
         setTheme("contacts");
 
         getMainWindow().setContent(
-                new SmartPresentation(Orientation.VERTICAL).visit(
+                new SmartPresentation(Orientation.HORIZONTAL).visit(
                         new AddressBookView(dataSource)));
     }
 }
