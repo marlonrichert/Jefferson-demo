@@ -14,12 +14,8 @@ public class AddressBookDemo extends Application {
 
     @Override
     public void init() {
-        setMainWindow(new Window("Address Book Demo application"));
-
-        setTheme("contacts");
-
-        getMainWindow().setContent(
+        setMainWindow(new Window("Address Book Demo application",
                 new SmartPresentation(Orientation.HORIZONTAL).visit(
-                        new AddressBookView(dataSource)));
+                        new AddressBookView(dataSource))));
     }
 }
