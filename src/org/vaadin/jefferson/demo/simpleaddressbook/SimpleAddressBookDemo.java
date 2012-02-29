@@ -12,7 +12,7 @@ public class SimpleAddressBookDemo extends Application {
     @Override
     public void init() {
         setMainWindow(new Window("Address Book",
-                new SmartPresentation(Orientation.VERTICAL).visit(
+                new SmartPresentation(Orientation.HORIZONTAL).visit(
                         new SimpleAddressBookView())));
     }
 }
