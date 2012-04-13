@@ -1,8 +1,8 @@
 package org.vaadin.jefferson.demo.addressbook.domain;
 
-import java.util.Random;
+import java.util.*;
 
-import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.*;
 
 @SuppressWarnings("serial")
 public class PersonContainer extends BeanItemContainer<Person> {
@@ -72,7 +72,7 @@ public class PersonContainer extends BeanItemContainer<Person> {
             if (n < 10000) {
                 n += 10000;
             }
-            p.setPostalCode(Integer.valueOf(n));
+            p.setPostalCode("" + n);
             p.setStreetAddress(streets[r.nextInt(streets.length)]);
             c.addItem(p);
         }
