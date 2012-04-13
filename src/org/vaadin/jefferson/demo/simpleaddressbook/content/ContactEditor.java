@@ -1,15 +1,15 @@
 package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
-import java.util.Arrays;
+import java.util.*;
 
-import org.vaadin.jefferson.Control;
-import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.demo.simpleaddressbook.domain.Contact;
+import org.vaadin.jefferson.*;
+import org.vaadin.jefferson.demo.simpleaddressbook.domain.*;
 
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Form;
+import com.vaadin.data.util.*;
+import com.vaadin.ui.*;
 
+@SuppressWarnings("deprecation")
 public final class ContactEditor extends Control<Form, ValueChangeListener> {
     private BeanItem<Contact> contact;
 

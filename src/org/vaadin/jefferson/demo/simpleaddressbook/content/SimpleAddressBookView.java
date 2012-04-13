@@ -1,14 +1,13 @@
 package org.vaadin.jefferson.demo.simpleaddressbook.content;
 
-import java.util.Random;
+import java.util.*;
 
-import org.vaadin.jefferson.content.ButtonControl;
-import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.demo.simpleaddressbook.domain.Contact;
+import org.vaadin.jefferson.content.*;
+import org.vaadin.jefferson.demo.simpleaddressbook.domain.*;
 
-import com.vaadin.data.Property;
+import com.vaadin.data.*;
 import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 
 public class SimpleAddressBookView extends SimpleComposite {
@@ -20,8 +19,7 @@ public class SimpleAddressBookView extends SimpleComposite {
 
     private ContactEditor contactEditor = new ContactEditor();
     private ContactList contactList = new ContactList();
-    private ButtonControl contactAdd = new ButtonControl(
-            ADD_CONTACT, new ContactAddHandler());
+    private ButtonControl contactAdd = new ButtonControl(ADD_CONTACT);
     private ContactRemoveControl contactRemoveControl = new ContactRemoveControl(
             contactList);
     private SimpleComposite nav = new SimpleComposite(NAVIGATION);
@@ -66,6 +64,8 @@ public class SimpleAddressBookView extends SimpleComposite {
 
         contactList.setChoices(contacts);
         contactList.setListener(new ContactListHandler());
+
+        contactAdd.setListener(new ContactAddHandler());
     }
 
     private class ContactListHandler implements Property.ValueChangeListener {

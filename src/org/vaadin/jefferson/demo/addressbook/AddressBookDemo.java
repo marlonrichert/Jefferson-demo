@@ -1,21 +1,21 @@
 package org.vaadin.jefferson.demo.addressbook;
 
-import org.vaadin.jefferson.demo.addressbook.content.AddressBookView;
-import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
-import org.vaadin.jefferson.presentation.SmartPresentation;
+import org.vaadin.jefferson.demo.addressbook.content.*;
+import org.vaadin.jefferson.demo.addressbook.domain.*;
+import org.vaadin.jefferson.presentation.*;
 import org.vaadin.jefferson.presentation.SmartPresentation.Orientation;
 
-import com.vaadin.Application;
-import com.vaadin.ui.Window;
+import com.vaadin.terminal.*;
+import com.vaadin.ui.*;
 
 @SuppressWarnings("serial")
-public class AddressBookDemo extends Application {
+public class AddressBookDemo extends Root {
     private PersonContainer dataSource = PersonContainer.createWithTestData();
 
     @Override
-    public void init() {
-        setMainWindow(new Window("Address Book Demo application",
-                new SmartPresentation(Orientation.VERTICAL).visit(
-                        new AddressBookView(dataSource))));
+    protected void init(WrappedRequest request) {
+        setCaption("Address Book demo");
+        setContent(new SmartPresentation(Orientation.VERTICAL).visit(
+                new AddressBookView(dataSource)));
     }
 }

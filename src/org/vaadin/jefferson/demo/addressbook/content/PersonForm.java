@@ -1,29 +1,18 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.demo.addressbook.domain.Person;
-import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
+import org.vaadin.jefferson.*;
+import org.vaadin.jefferson.demo.addressbook.domain.*;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.data.validator.RegexpValidator;
-import com.vaadin.ui.Button;
+import com.vaadin.data.*;
+import com.vaadin.data.util.*;
+import com.vaadin.data.validator.*;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.DefaultFieldFactory;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.Form;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.TextField;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 public class PersonForm extends View<Form> implements ClickListener {
 
     private Button save = new Button("Save", this);
@@ -84,14 +73,14 @@ public class PersonForm extends View<Form> implements ClickListener {
          */
         rendition.setFormFieldFactory(new DefaultFieldFactory() {
             @Override
-            public Field createField(Item item, Object propertyId,
+            public Field<?> createField(Item item, Object propertyId,
                     Component uiContext) {
                 if (propertyId.equals("city")) {
                     cities.setWidth("200px");
                     return cities;
                 }
 
-                Field field = super.createField(item, propertyId, uiContext);
+                Field<?> field = super.createField(item, propertyId, uiContext);
                 if (propertyId.equals("postalCode")) {
                     TextField tf = (TextField) field;
                     /*

@@ -1,11 +1,9 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
-import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
-import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
+import org.vaadin.jefferson.content.*;
+import org.vaadin.jefferson.demo.addressbook.domain.*;
 
-import com.vaadin.ui.Window;
-import com.vaadin.ui.Window.Notification;
+import com.vaadin.ui.*;
 
 public class AddressBookView extends SimpleComposite {
     private final SearchView search = new SearchView(this);
@@ -48,9 +46,9 @@ public class AddressBookView extends SimpleComposite {
 
     protected void search(SearchFilter searchFilter, boolean save) {
         String term = searchFilter.getTerm();
-        Window window = getRendition().getWindow();
         if (term == null || term.equals("")) {
-            window.showNotification("Search term cannot be empty!",
+            Root.getCurrentRoot().showNotification(
+                    "Search term cannot be empty!",
                     Notification.TYPE_WARNING_MESSAGE);
             return;
         }
@@ -67,7 +65,7 @@ public class AddressBookView extends SimpleComposite {
 
         showListView();
 
-        window.showNotification(
+        Root.getCurrentRoot().showNotification(
                 "Searched for " + searchFilter.getPropertyId() + "=*"
                         + searchFilter.getTerm() + "*, found "
                         + dataSource.size() + " item(s).",
@@ -77,7 +75,7 @@ public class AddressBookView extends SimpleComposite {
     private void saveSearch(SearchFilter searchFilter) {
         String searchName = searchFilter.getSearchName();
         if (searchName == null || searchName.equals("")) {
-            getRendition().getWindow().showNotification(
+            getRendition().getRoot().showNotification(
                     "Please enter a name for your search!",
                     Notification.TYPE_WARNING_MESSAGE);
             return;

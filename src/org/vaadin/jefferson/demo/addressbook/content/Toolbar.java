@@ -1,16 +1,12 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
-import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.content.ButtonControl;
-import org.vaadin.jefferson.content.SimpleComposite;
+import org.vaadin.jefferson.*;
+import org.vaadin.jefferson.content.*;
 
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.Label.ContentMode;
 
 public class Toolbar extends SimpleComposite {
     public static final String ADD_CONTACT = "Add contact";
@@ -19,31 +15,10 @@ public class Toolbar extends SimpleComposite {
     public static final String SEARCH = "Search";
     public static final String SHARE = "Share";
 
-    private View<Button> newContactButton = new ButtonControl(ADD_CONTACT,
-            new ClickListener() {
-                public void buttonClick(ClickEvent event) {
-                    root.addNewContact();
-                }
-            });
-    private View<Button> searchButton = new ButtonControl(SEARCH,
-            new ClickListener() {
-                public void buttonClick(ClickEvent event) {
-                    root.showSearchView();
-                }
-            });
-    private View<Button> shareButton = new ButtonControl(SHARE,
-            new ClickListener() {
-
-                public void buttonClick(ClickEvent event) {
-                    showShareWindow();
-                }
-            });
-    private View<Button> helpButton = new ButtonControl(HELP,
-            new ClickListener() {
-                public void buttonClick(ClickEvent event) {
-                    showHelpWindow();
-                }
-            });
+    private ButtonControl newContactButton = new ButtonControl(ADD_CONTACT);
+    private ButtonControl searchButton = new ButtonControl(SEARCH);
+    private ButtonControl shareButton = new ButtonControl(SHARE);
+    private ButtonControl helpButton = new ButtonControl(HELP);
 
     private View<Embedded> logo = new Logo(LOGO, Embedded.class);
     private AddressBookView root;
@@ -58,14 +33,38 @@ public class Toolbar extends SimpleComposite {
                 shareButton,
                 helpButton,
                 logo);
+
+        newContactButton.setListener(new ClickListener() {
+            public void buttonClick(ClickEvent event) {
+                Toolbar.this.root.addNewContact();
+            }
+        });
+
+        searchButton.setListener(new ClickListener() {
+            public void buttonClick(ClickEvent event) {
+                Toolbar.this.root.showSearchView();
+            }
+        });
+
+        shareButton.setListener(new ClickListener() {
+            public void buttonClick(ClickEvent event) {
+                showShareWindow();
+            }
+        });
+
+        helpButton.setListener(new ClickListener() {
+            public void buttonClick(ClickEvent event) {
+                showHelpWindow();
+            }
+        });
     }
 
     protected void showHelpWindow() {
-        getRendition().getWindow().addWindow(new HelpWindow());
+        getRendition().getRoot().addWindow(new HelpWindow());
     }
 
     protected void showShareWindow() {
-        getRendition().getWindow().addWindow(new SharingOptions());
+        getRendition().getRoot().addWindow(new SharingOptions());
     }
 
     private static class HelpWindow extends Window {
@@ -76,7 +75,7 @@ public class Toolbar extends SimpleComposite {
 
         public HelpWindow() {
             setCaption("Address Book help");
-            addComponent(new Label(HELP_HTML_SNIPPET, Label.CONTENT_XHTML));
+            addComponent(new Label(HELP_HTML_SNIPPET, ContentMode.XHTML));
         }
     }
 

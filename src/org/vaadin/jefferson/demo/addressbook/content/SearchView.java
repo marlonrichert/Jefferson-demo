@@ -1,20 +1,13 @@
 package org.vaadin.jefferson.demo.addressbook.content;
 
-import org.vaadin.jefferson.Control;
-import org.vaadin.jefferson.Presentation;
-import org.vaadin.jefferson.View;
-import org.vaadin.jefferson.content.ButtonControl;
-import org.vaadin.jefferson.content.SelectionControl;
-import org.vaadin.jefferson.content.SimpleComposite;
-import org.vaadin.jefferson.content.TextControl;
-import org.vaadin.jefferson.demo.addressbook.domain.PersonContainer;
-import org.vaadin.jefferson.demo.addressbook.domain.SearchFilter;
+import org.vaadin.jefferson.*;
+import org.vaadin.jefferson.content.*;
+import org.vaadin.jefferson.demo.addressbook.domain.*;
 
-import com.vaadin.ui.AbstractSelect;
-import com.vaadin.ui.Button;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
 
 @SuppressWarnings("serial")
 public class SearchView extends SimpleComposite {
@@ -22,8 +15,7 @@ public class SearchView extends SimpleComposite {
     private FieldToSearch fieldToSearch = new FieldToSearch();
     private SaveSearch saveSearch = new SaveSearch();
     private SearchName searchName = new SearchName();
-    private View<Button> search = new ButtonControl(
-            "Search", new SearchAction());
+    private ButtonControl search = new ButtonControl("Search");
     private AddressBookView root;
 
     public SearchView(AddressBookView root) {
@@ -31,6 +23,8 @@ public class SearchView extends SimpleComposite {
         this.root = root;
 
         setChildren(searchTerm, fieldToSearch, saveSearch, searchName, search);
+
+        search.setListener(new SearchAction());
     }
 
     private class SearchAction implements Button.ClickListener {
@@ -43,13 +37,14 @@ public class SearchView extends SimpleComposite {
         }
     }
 
-    private class SaveSearch extends Control<CheckBox, ClickListener> {
+    private class SaveSearch extends Control<CheckBox, ValueChangeListener> {
         private SaveSearch() {
-            super("Save search", CheckBox.class, ClickListener.class);
+            super("Save search", CheckBox.class, ValueChangeListener.class);
 
-            setListener(new ClickListener() {
-                public void buttonClick(ClickEvent event) {
-                    searchName.setVisible(getRendition().booleanValue());
+            setListener(new ValueChangeListener() {
+                public void valueChange(ValueChangeEvent event) {
+                    searchName.setVisible(getRendition().getValue()
+                            .booleanValue());
                 }
             });
         }
